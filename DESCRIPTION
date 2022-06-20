@@ -9,3 +9,13 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.0
+Imports: 
+    fftw,
+    ggplot2,
+    misc3d,
+    sparr,
+    spastat.core,
+    spatstat.core,
+    spatstat.geom,
+    spatstat.random,
+    spatstat.utils
