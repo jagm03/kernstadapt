@@ -15,7 +15,6 @@ Imports:
     ggplot2,
     misc3d,
     sparr,
-    spastat.core,
     spatstat.core,
     spatstat.geom,
     spatstat.random,
