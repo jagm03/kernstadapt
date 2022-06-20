@@ -2,7 +2,8 @@ Package: kernstadapt
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
 Authors@R: 
-    person("Jonatan", "González", , "first.last@example.com", role = c("aut", "cre"),
+    person("Jonatan", "González", , "jonathan.gonzalez@kaust.edu.sa", 
+            role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID"))
 Description: What the package does (one paragraph).
 License: MIT + file LICENSE
