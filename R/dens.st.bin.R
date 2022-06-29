@@ -1,6 +1,7 @@
 #' @importFrom sparr OS
 #' @importFrom stats quantile
 #' @importFrom spatstat.geom %mark% marks
+#' @importFrom spatstat.random rpoispp
 #' @export
 dens.st.bin <- function(X, t,
                         bw.xy = NULL, bw.t = NULL, #bandwidths
