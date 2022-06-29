@@ -49,8 +49,10 @@ Jonatan A. González
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 %}
 \examples{
+\dontrun{
 X <- rpoispp(1400)
 t <- rbeta(X$n, 1,4,0.8)
 stIntensity <- dens.st.sep.bin(X,t, at = "bins")
 plot(as.imlist(stIntensity[13:16]), main = 'Separable Example')
+}
 }
