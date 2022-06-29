@@ -31,8 +31,10 @@ If \code{at = "points"} (the default), the result is a numeric vector with one e
 Jonatan A. González
 }
 \examples{
+\dontrun{
 X <- rpoispp(400)
 t <- rbeta(X$n, 1,4,0.8)
 stIntensity <- dens.adapt.direct(X,t, at = "bins", dimt = 32)
 plot(as.imlist(stIntensity[13:16]), main = 'Non-separable direct example')
+}
 }
