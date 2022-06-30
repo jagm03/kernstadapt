@@ -11,6 +11,7 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
+  eval = FALSE,
   comment = "#>"
 )
 ```
@@ -18,7 +19,7 @@ knitr::opts_chunk$set(
 ```{r setup, echo=FALSE, warning=FALSE, message=FALSE}
 library(devtools)
 #devtools::install_github('jagm03/adapt.st', force = T)
-library(adapt.st)
+library(kernstadapt)
 library(ggplot2)
 library(stpp)
 library(sparr)
