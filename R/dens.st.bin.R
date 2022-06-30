@@ -1,6 +1,6 @@
 #' @importFrom sparr OS
 #' @importFrom stats quantile
-#' @importFrom spatstat.geom %mark% marks
+#' @importFrom spatstat.geom setmarks marks
 #' @importFrom spatstat.random rpoispp
 #' @export
 dens.st.bin <- function(X, t,
@@ -48,7 +48,7 @@ dens.st.bin <- function(X, t,
   qmid.t <- quantile(bw.t, pmid.t)
   group.xy <- factor(groupid.xy, levels = 1:ngroups.xy)
   group.t <- factor(groupid.t, levels = 1:ngroups.t)
-  BX <- X %mark% data.frame(t = t, g.t = group.t)
+  BX <- setmarks(X, data.frame(t = t, g.t = group.t))
   Y.xy <- split(BX, group.xy)
 
   # remove zero pp
