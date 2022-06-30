@@ -3,7 +3,7 @@ title: "Adaptive temporal intensity"
 output: rmarkdown::pdf_document
 geometry: margin = 1.5cm
 vignette: >
-  %\VignetteIndexEntry{adaptive_temporal_intensity}
+  %\VignetteIndexEntry{temp_intensity}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
