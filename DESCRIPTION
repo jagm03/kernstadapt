@@ -19,3 +19,7 @@ Imports:
     spatstat.geom,
     spatstat.random,
     spatstat.utils
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
