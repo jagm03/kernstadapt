@@ -67,7 +67,7 @@ dens.st.bin <- function(X, t,
     x$marks$delta = qmid.t[x$marks$g.t]
     return(x)})
 
-  PP <- lapply(Y.xy.t, function(x) unmark(x) %mark% x$marks$t)
+  PP <- lapply(Y.xy.t, function(x) setmarks(unmark(x), x$marks$t))
   B.XY <- lapply(Y.xy.t, function(x) marks(x)$epsilon[1])
   B.t <- lapply(Y.xy.t, function(x) marks(x)$delta[1])
 
