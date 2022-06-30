@@ -57,8 +57,8 @@ dens.st.bin <- function(X, t,
   qmid.xy <- qmid.xy[ok1]
 
   Y.xy <- mapply(function(x, e) {
-    marks(x) <- cbind(marks(x), epsilon = e)
-    return(x)
+    u <- cbind(marks(x), epsilon = e)
+    return(setmarks(x, u))
   },
   x = Y.xy, e = as.list(qmid.xy), SIMPLIFY = F)
 
