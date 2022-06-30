@@ -1,0 +1,111 @@
+---
+title: "Adaptive spatio-temporal intensity by partitioning algorithm"
+output: rmarkdown::pdf_document
+geometry: margin = 1.5cm
+vignette: >
+  %\VignetteIndexEntry{st_intensity}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, echo=FALSE, warning=FALSE, message=FALSE}
+library(devtools)
+#devtools::install_github('jagm03/adapt.st', force = T)
+library(adapt.st)
+library(ggplot2)
+library(stpp)
+library(sparr)
+library(misc3d)
+```
+
+# First example: Log-Gaussian spatio-temporal point pattern
+
+First, we simulate a spatio-temporal point pattern (in this case we fix the number of points)
+
+```{r, fig.height = 5, fig.align="center"}
+# Setting a simulation of temporal point pattern 
+# Non separable covariance function: 
+N <- 1000
+PP1 <- rlgcp(npoints = N, nx = 128, ny = 128, nt = 64,
+             separable = F, model = "gneiting", scale = c(0.5, 0.8),
+             param = c(1, 1, .1, 0.1, 1, 2), var.grf = 2, mean.grf = 1)
+
+# Spatstat format
+XX <- ppp(x = PP1$xyt[, 1], y = PP1$xyt[, 2], marks = PP1$xyt[, 3])
+colmap <- colourmap(terrain.colors(120), range = range(marks(XX)))
+sy <- symbolmap(pch = 21, bg = colmap, range = range(marks(XX)))
+plot(XX, symap = sy, 'log-Gaussian Cox point pattern')
+```
+
+Then we set the pilot bandwdiths
+
+```{r}
+Y <- unmark(XX)
+s <- PP1$xyt[, 3]
+#Pilot bandwidths
+bwS0 <- OS(Y)
+bwt0 <- bw.SJ(s)
+bwS <- bw.abram(Y, h0 = bwS0)
+bwt <- bw.abram.temp(ti = s, h0 = bwt0)
+```
+
+## Intensity estimates
+
+```{r}
+# Fixed bandwidth estimate (non-separable)
+classic.dens <- spattemp.density(pp = Y, h = bwS0, tt = s, lambda = bwt0,
+                                 sedge = "uniform", sres = 128, tres = 64)
+
+# Adaptive bandwidth estimate direct, i.e. point by point 
+adapt.dens.direct <- dens.adapt.direct(X = Y, t = s, bw.xy = bwS, bw.t = bwt, 
+                                       dimt = 64, at = 'bins')
+
+adapt.dens.sep <- dens.st.sep.bin(X = Y, t = s, bw.xy = bwS, bw.t = bwt, 
+                                  dimt = 64, at = "bins")
+adapt.dens <- dens.st.bin(X = Y, t = s, bw.xy = bwS,bw.t = bwt, 
+                          dimt = 64, at = "bins")
+true.dens <- aperm(N * PP1$Lambda, c(2,1,3))
+
+## ISE
+# Everything to a matrix
+CD <- N * sapply(classic.dens$z, "[[", "v", simplify = "array")
+DIRECT <- sapply(adapt.dens.direct, "[[", "v", simplify = "array")
+ADS <- sapply(adapt.dens.sep, "[[", "v", simplify = "array")
+AD <- sapply(adapt.dens, "[[", "v", simplify = "array")
+
+# Aprox differential
+Dxyt <- (1 / 128) ^ 2 * (1 / 64)
+
+ISE.classic <- sum((CD - true.dens) ^ 2) * Dxyt
+ISE.direct <- sum((DIRECT - true.dens) ^ 2) * Dxyt
+ISE.adapt.sep <- sum((ADS - true.dens) ^ 2) * Dxyt
+ISE.adapt <- sum((AD - true.dens) ^ 2) * Dxyt
+log(c(ISE.classic,ISE.direct, ISE.adapt.sep, ISE.adapt))
+```
+
+```{r, fig.align="center"}
+## Sample Plots
+I <- c(13, 17, 21, 31, 50)
+# Pass theoretical to images
+The <- list()
+for (i in 1:length(I)) {The[[i]] = im(true.dens[,,I[i]], xrange = c(0, 1), yrange = c(0, 1))}
+The <- as.imlist(The)
+DIRECT <- as.imlist(adapt.dens.direct[I])
+CN <- as.imlist(classic.dens$z[I])
+AS <- as.imlist(adapt.dens.sep[I])
+AN <- as.imlist(adapt.dens[I])
+
+plot.imlist(The, ncols = 5, main = 'True intensity')
+plot.imlist(CN, ncols = 5, main = 'Classic non-separable estimate')
+plot.imlist(DIRECT, ncols = 5, main = 'Adaptive direct estimate')
+plot.imlist(AS, ncols = 5, main = 'Adaptive separable estimate')
+plot.imlist(AN, ncols = 5, main = 'Adaptive non-separable estimate')
+```
+
