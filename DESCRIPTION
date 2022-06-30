@@ -11,8 +11,6 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.0
 Imports: 
-    fftw,
-    ggplot2,
     misc3d,
     sparr,
     spatstat.core,
@@ -21,5 +19,6 @@ Imports:
     spatstat.utils
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    ggplot2
 VignetteBuilder: knitr
