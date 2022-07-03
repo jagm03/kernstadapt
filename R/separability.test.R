@@ -1,8 +1,7 @@
 #' @importFrom spatstat.geom verifyclass cut.ppp quadratcount.ppp
-X <- rpoispp(100)
-t <- abs(rbeta(npoints(X), shape1 = 0.1, shape2 = 0.3))
-
-separability.test(X, t, nx = NULL, ny = NULL, nt = NULL, nperm = 1000){
+#' @export
+separability.test(X, t, nx = NULL, ny = NULL, nt = NULL, nperm = 1000)
+{
   verifyclass(X, "ppp")
   if (missing(nx) || is.null(nx)) {
     nx <- ceiling(npoints(X) ^ (1/6))
