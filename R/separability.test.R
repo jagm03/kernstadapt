@@ -18,8 +18,8 @@ separability.test <- function(X, t, nx = NULL, ny = NULL, nt = NULL, nperm = 100
   testsep <- fisher.test(nij, simulate.p.value = T,  B = nperm)
   testsep$method[1] <- "Separability test based on Fisher's for counting data"
   testsep$alternative <- "Not spatio-temporal separability"
-  testsep$data.name <- paste("Point pattern", deparse(substitute(X)),
-                             "with times",  deparse(substitute(t)))
+  testsep$data.name <- paste("Point pattern", (substitute(X)),
+                             "with times",  (substitute(t)))
   testsep
 }
 
