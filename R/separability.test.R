@@ -1,4 +1,5 @@
 #' @importFrom spatstat.geom verifyclass cut.ppp quadratcount.ppp
+#' @importFrom stats fisher.test
 #' @export
 separability.test <- function(X, t, nx = NULL, ny = NULL, nt = NULL, nperm = 1000)
 {

@@ -1,5 +1,5 @@
 \name{amazon}
-\alias{aegiss}
+\alias{amazon}
 \docType{data}
 \title{
 Locations of fires in the Amazon biome.
