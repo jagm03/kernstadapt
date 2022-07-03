@@ -32,4 +32,4 @@ plot(amazon[sample(amazon$n, 1000)], bg = heat.colors(20), pch = 21, cex = 1)
 }
 }
 \keyword{datasets}
-\keyword{aegiss}
+\keyword{amazon}
