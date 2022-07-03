@@ -29,7 +29,7 @@ A list with class "htest" containing the following components:
 }
 \references{
 Ghorbani et al. (2021) Testing the first-order separability hypothesis for spatio-temporal point patterns, \emph{Computational Statistics & Data Analysis,} Vol. 161, p. 107245}
-}
+
 \author{
 Jonatan A. González
 }
