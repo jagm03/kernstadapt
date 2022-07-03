@@ -4,7 +4,7 @@
 Separability test for spatio-temporal point patterns
 }
 \description{
-Performs a separability test of the first-order intensity function based on Fisher's test and counts.
+Performs a separability test of the first-order intensity function based on a Fisher Monte Carlo test of cell counts.
 }
 \usage{
 separability.test(X, t,
@@ -18,17 +18,18 @@ separability.test(X, t,
  \item{nperm}{An integer specifying the number of replicates used in the Monte Carlo test.}
 }
 \details{
-This function computes a non-separable spatio-temporal adaptive kernel estimate of the intensity. It starts from a planar point pattern \code{X} and a vector of times \code{t} and partition (cells) the spatial and temporal components to apply a non-separable kernel estimator within each cell.
-The arguments \code{bw.xy} and \code{bw.t} specify the smoothing bandwidth vectors to be applied to each of the points in \code{X} and \code{t}. They should be a numeric vectors of bandwidths.
-
-The method partition the range of bandwidths into intervals, subdividing the points of the pattern \code{X} and \code{t} into sub-patterns according to the bandwidths, and applying fixed-bandwidth smoothing to each sub-pattern. Specifying \code{ngroups.xy = 1} is the same as fixed-bandwidth smoothing with bandwidth \code{sigma = median(bw.xy)} in the spatial case and \code{ngroups.t = 1} is the same as fixed-bandwidth smoothing with bandwidth \code{sigma = median(bw.xy)}.
+This function performs a basic test of the separability hypothesis in a manner similar to independence test in two-way contingency tables. The test is conditional on the observed number of points. It considers a regular division of the interval \eqn{T} into disjoint sub-intervals \eqn{T_1,...,T_{n_t}} and similarly a division of the window \eqn{W} into disjoint subsets \eqn{W1, ..., W{n_x \timex n_y}}. Then the function computes Fisher's test statistic and get a p-value based on Monte Carlos approximation.
 }
 \value{
-If \code{at = "points"} (the default), the result is a numeric vector with one entry for each data point in \code{X}. if \code{at = "bins"} is a list named (by time-point) list of pixel images (\link[spatstat.geom]{im} objects) corresponding to the joint spatio-temporal intensity over space at each discretised time bin.
+A list with class "htest" containing the following components:
+\item{p.value}{the approximate p-value of the test.}
+\item{method}{the character string "Separability test based on Fisher's for counting data".}
+\item{alternative}{a character string describing the alternative hypothesis.}
+\item{data.name}{a character string giving the name(s) of the data.}
 }
-%\references{
-%% ~put references to the literature/web site here ~
-%}
+\references{
+Ghorbani et al. (2021) Testing the first-order separability hypothesis for spatio-temporal point patterns, \emph{Computational Statistics & Data Analysis,} Vol. 161, p. 107245}
+}
 \author{
 Jonatan A. González
 }

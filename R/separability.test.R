@@ -1,6 +1,6 @@
 #' @importFrom spatstat.geom verifyclass cut.ppp quadratcount.ppp
 #' @export
-separability.test(X, t, nx = NULL, ny = NULL, nt = NULL, nperm = 1000)
+separability.test <- function(X, t, nx = NULL, ny = NULL, nt = NULL, nperm = 1000)
 {
   verifyclass(X, "ppp")
   if (missing(nx) || is.null(nx)) {
