@@ -28,16 +28,17 @@ library(misc3d)
 
 First, we want to check the intensity by using an artificial point pattern. Therefore, we simulate a spatio-temporal point pattern (in this case we fix the number of points prior to simulation).
 
+
 ```{r}
 # Number of points coming from a Poisson distribution with mean 1000
 N <- rpois(1, 1000)
 ```
 
+Then we set a covariance model for the underlying random field, in our case we chose a Geneiting covariance
 
 ```{r, fig.height = 5, fig.align="center"}
 # Setting a simulation of temporal point pattern 
 # Non separable covariance function: 
-N <- 1000
 PP1 <- rlgcp(npoints = N, nx = 128, ny = 128, nt = 64,
              separable = F, model = "gneiting", scale = c(0.5, 0.8),
              param = c(1, 1, .1, 0.1, 1, 2), var.grf = 2, mean.grf = 1)
