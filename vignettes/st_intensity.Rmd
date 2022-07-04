@@ -87,28 +87,74 @@ Now we compute the adaptive intensity by using our partitioning algorithm. For d
 
 ```{r}
 # In this case we use 8 groups for space and 4 for time
-adapt.dens <- dens.st.bin(X = Y, t = s, bw.xy = bwS, bw.t = bwt, 
+adapt.dens <- dens.st.bin(X = Y, t = v, bw.xy = bwS, bw.t = bwt, 
                           ngroups.xy = 8, ngroups.t = 4,
                           dimt = 64, at = "bins")
 ```
 
+
+We plot some snapshots of the estimates that we have computed. 
 ```{r, fig.align="center"}
-## Sample Plots
+# We select some fixed times for visualisation
 I <- c(13, 17, 21, 31, 50)
-# Pass theoretical to images
-The <- list()
-for (i in 1:length(I)) {The[[i]] = im(true.dens[,,I[i]], xrange = c(0, 1), yrange = c(0, 1))}
-The <- as.imlist(The)
-DIRECT <- as.imlist(adapt.dens.direct[I])
+
+# We subset the lists
 CN <- as.imlist(classic.dens$z[I])
-AS <- as.imlist(adapt.dens.sep[I])
 AN <- as.imlist(adapt.dens[I])
 
-plot.imlist(The, ncols = 5, main = 'True intensity')
-plot.imlist(CN, ncols = 5, main = 'Classic non-separable estimate')
-plot.imlist(DIRECT, ncols = 5, main = 'Adaptive direct estimate')
-plot.imlist(AS, ncols = 5, main = 'Adaptive separable estimate')
+# We generate the plots
+plot.imlist(CN, ncols = 5, main = 'Classic fixed-bandwidth estimate')
 plot.imlist(AN, ncols = 5, main = 'Adaptive non-separable estimate')
 ```
 
 # Second example: Amazonia Data
+
+## Loading and visualising data
+
+We want to estimate the intensity of the Amazonia fires.
+```{r}
+# Loading dataset
+data("amazon")
+```
+
+Now, given that the number of points is huge, for visualisation we selec just a sample of 5000.
+```{r, fig.height = 3, fig.align="center"}
+# Extract a sample of 5000 data points
+AmazonReduced <- amazon[sample.int(amazon$n, 5000)]
+
+# Set the color scheme
+colmap <- colourmap(heat.colors(120), range = range(marks(AmazonReduced)))
+sy <- symbolmap(pch = 21, bg = colmap, range = range(marks(AmazonReduced)))
+
+# Plotting
+plot(AmazonReduced, symap = sy, 'Sample of Amazonia fires')
+```
+
+
+## Separability test
+
+Before estimating the intensity, it is very convenient to know whether separability holds. When separability holds, estimating the spatio-temporal intensity becomes easier and faster. So we perform a separability test to have an approximate answer to that question. The test is performed in a Monte Carlo fashion; therefore, we have to fix a number of Monte Carlo samples prior to the test, say 1500.
+
+```{r}
+separability.test(X = unmark(amazon), t = amazon$marks, nperm = 1500)
+```
+
+Given the test result, we should not assume separability.
+
+## Estimating global bandwidths
+
+Before using the adaptive estimator, we should set the global bandwidths, i.e., the bandwidths for estimating the pilot intensities. These pilot intensities will assign a particular bandwidth to each data point.
+
+```{r}
+# We separate the time column from our point pattern
+Y <- unmark(amazon)
+v <- amazon$marks
+
+# Global bandwidths
+bwS0 <- OS(Y) # The spatial bandwidth will be the oversmoothing version
+bwt0 <- bw.nrd(v) # We employ Scott bandwidth for time 
+
+# Spatial and temporal bandwidths based on pilot estimations
+bwS <- bw.abram(Y, h0 = bwS0)
+bwt <- bw.abram.temp(ti = v, h0 = bwt0)
+```
