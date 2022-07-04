@@ -33,14 +33,17 @@ First, we want to check the intensity using an artificial point pattern. Therefo
 N <- rpois(1, 1000)
 ```
 
-Then we set a covariance model for the underlying random field; in our case, we chose a Geneiting covariance with its parameters. We set the additional parameters for the random field simulation as the mesh, variance and scales.
+Then we set a covariance model for the underlying random field; in our case, we chose a non-separable Geneiting covariance function with its parameters. We set the additional parameters for the random field simulation as the mesh, variance and scales.
+
+```{r}
+logGaussianPP <- rlgcp(npoints = N, nx = 128, ny = 128, nt = 64,
+                       separable = F, model = "gneiting", scale = c(0.5, 0.8),
+                       param = c(1, 1, .1, 0.1, 1, 2), var.grf = 2, mean.grf = 1)
+```
+
 
 ```{r, fig.height = 5, fig.align="center"}
-# Setting a simulation of temporal point pattern 
-# Non separable covariance function: 
-PP1 <- rlgcp(npoints = N, nx = 128, ny = 128, nt = 64,
-             separable = F, model = "gneiting", scale = c(0.5, 0.8),
-             param = c(1, 1, .1, 0.1, 1, 2), var.grf = 2, mean.grf = 1)
+
 
 # Spatstat format
 XX <- ppp(x = PP1$xyt[, 1], y = PP1$xyt[, 2], marks = PP1$xyt[, 3])
