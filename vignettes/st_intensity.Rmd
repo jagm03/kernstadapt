@@ -26,8 +26,7 @@ library(misc3d)
 
 # First example: Log-Gaussian spatio-temporal point pattern
 
-First, we want to check the intensity by using an artificial point pattern. Therefore, we simulate a spatio-temporal point pattern (in this case we fix the number of points prior to simulation).
-
+First, we want to check the intensity using an artificial point pattern. Therefore, we simulate a spatio-temporal point pattern (in this case, we fix the number of points prior to simulation).
 
 ```{r}
 # Number of points coming from a Poisson distribution with mean 1000
