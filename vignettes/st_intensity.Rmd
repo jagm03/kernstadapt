@@ -108,3 +108,4 @@ plot.imlist(AS, ncols = 5, main = 'Adaptive separable estimate')
 plot.imlist(AN, ncols = 5, main = 'Adaptive non-separable estimate')
 ```
 
+# Second example: Amazonia Data
