@@ -57,7 +57,7 @@ plot(XX, symap = sy, 'log-Gaussian Cox point pattern')
 
 ## Estimating global bandwidths
 
-Before using the adaptive estimator, we should set the global bandwidths, i.e., the bandwidths for estimating the pilot intensities. These pilot intensities will be used for assigning a particular bandwidth to each data point.
+Before using the adaptive estimator, we should set the global bandwidths, i.e., the bandwidths for estimating the pilot intensities. These pilot intensities will assign a particular bandwidth to each data point.
 
 ```{r}
 Y <- unmark(XX)
