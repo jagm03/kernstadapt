@@ -48,9 +48,11 @@ We want to plot the point pattern generated above in 2D, so we employ the **spat
 # Spatstat format
 XX <- ppp(x = logGaussianPP$xyt[, 1], y = logGaussianPP$xyt[, 2], 
           marks = logGaussianPP$xyt[, 3], window = owin())
+
 # Set the color scheme
 colmap <- colourmap(terrain.colors(120), range = range(marks(XX)))
 sy <- symbolmap(pch = 21, bg = colmap, range = range(marks(XX)))
+
 # Plotting
 plot(XX, symap = sy, 'log-Gaussian Cox point pattern')
 ```
@@ -60,47 +62,34 @@ plot(XX, symap = sy, 'log-Gaussian Cox point pattern')
 Before using the adaptive estimator, we should set the global bandwidths, i.e., the bandwidths for estimating the pilot intensities. These pilot intensities will assign a particular bandwidth to each data point.
 
 ```{r}
+# We separate the time column from our point pattern
 Y <- unmark(XX)
-s <- PP1$xyt[, 3]
-#Pilot bandwidths
-bwS0 <- OS(Y)
-bwt0 <- bw.SJ(s)
+v <- XX$marks
+
+# Global bandwidths
+bwS0 <- OS(Y) # The spatial bandwidth will be the oversmoothing version
+bwt0 <- bw.SJ(v) # We employ Sheather & Jones's bandwidth for time 
+
+# Spatial and temporal bandwidths based on pilot estimations
 bwS <- bw.abram(Y, h0 = bwS0)
-bwt <- bw.abram.temp(ti = s, h0 = bwt0)
+bwt <- bw.abram.temp(ti = v, h0 = bwt0)
 ```
 
 ## Intensity estimates
 
+First we use a fixed-bandwidth kernel estimate for the intensity using a function provided by the **sparr** package.
 ```{r}
 # Fixed bandwidth estimate (non-separable)
-classic.dens <- spattemp.density(pp = Y, h = bwS0, tt = s, lambda = bwt0,
+classic.dens <- spattemp.density(pp = Y, h = bwS0, tt = v, lambda = bwt0,
                                  sedge = "uniform", sres = 128, tres = 64)
+```
+Now we compute the adaptive intensity by using our partitioning algorithm. For doing that, we have to set first a fixed number of groups for the spatial and the temporal bandwidths; it could be done manually or let the function decide based on a rule-of-thumb. In addition, we set a temporal resolution of 64 pixels (the default is 128 for space and for time). We can evaluate the intensity at the data points (at = "points"), or obtain snapshots (at = "bins", the default).
 
-# Adaptive bandwidth estimate direct, i.e. point by point 
-adapt.dens.direct <- dens.adapt.direct(X = Y, t = s, bw.xy = bwS, bw.t = bwt, 
-                                       dimt = 64, at = 'bins')
-
-adapt.dens.sep <- dens.st.sep.bin(X = Y, t = s, bw.xy = bwS, bw.t = bwt, 
-                                  dimt = 64, at = "bins")
-adapt.dens <- dens.st.bin(X = Y, t = s, bw.xy = bwS,bw.t = bwt, 
+```{r}
+# In this case we use 8 groups for space and 4 for time
+adapt.dens <- dens.st.bin(X = Y, t = s, bw.xy = bwS, bw.t = bwt, 
+                          ngroups.xy = 8, ngroups.t = 4,
                           dimt = 64, at = "bins")
-true.dens <- aperm(N * PP1$Lambda, c(2,1,3))
-
-## ISE
-# Everything to a matrix
-CD <- N * sapply(classic.dens$z, "[[", "v", simplify = "array")
-DIRECT <- sapply(adapt.dens.direct, "[[", "v", simplify = "array")
-ADS <- sapply(adapt.dens.sep, "[[", "v", simplify = "array")
-AD <- sapply(adapt.dens, "[[", "v", simplify = "array")
-
-# Aprox differential
-Dxyt <- (1 / 128) ^ 2 * (1 / 64)
-
-ISE.classic <- sum((CD - true.dens) ^ 2) * Dxyt
-ISE.direct <- sum((DIRECT - true.dens) ^ 2) * Dxyt
-ISE.adapt.sep <- sum((ADS - true.dens) ^ 2) * Dxyt
-ISE.adapt <- sum((AD - true.dens) ^ 2) * Dxyt
-log(c(ISE.classic,ISE.direct, ISE.adapt.sep, ISE.adapt))
 ```
 
 ```{r, fig.align="center"}
