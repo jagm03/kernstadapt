@@ -33,7 +33,7 @@ First, we want to check the intensity using an artificial point pattern. Therefo
 N <- rpois(1, 1000)
 ```
 
-Then we set a covariance model for the underlying random field, in our case we chose a Geneiting covariance with its own parameters. We set the additional parameters for the ramdom field simulation as the mesh 
+Then we set a covariance model for the underlying random field; in our case, we chose a Geneiting covariance with its parameters. We set the additional parameters for the random field simulation as the mesh, variance and scales.
 
 ```{r, fig.height = 5, fig.align="center"}
 # Setting a simulation of temporal point pattern 
