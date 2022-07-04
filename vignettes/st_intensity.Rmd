@@ -26,6 +26,8 @@ library(misc3d)
 
 # First example: Log-Gaussian spatio-temporal point pattern
 
+## Generating an observation
+
 First, we want to check the intensity using an artificial point pattern. Therefore, we simulate a spatio-temporal point pattern (in this case, we fix the number of points prior to simulation).
 
 ```{r}
@@ -53,7 +55,9 @@ sy <- symbolmap(pch = 21, bg = colmap, range = range(marks(XX)))
 plot(XX, symap = sy, 'log-Gaussian Cox point pattern')
 ```
 
-Then we set the pilot bandwdiths
+## Estimating global bandwidths
+
+Before using the adaptive estimator, we should set the global bandwidths, i.e., the bandwidths for estimating the pilot intensities. These pilot intensities will be used for assigning a particular bandwidth to each data point.
 
 ```{r}
 Y <- unmark(XX)
