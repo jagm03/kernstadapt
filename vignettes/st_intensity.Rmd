@@ -41,14 +41,15 @@ logGaussianPP <- rlgcp(npoints = N, nx = 128, ny = 128, nt = 64,
                        param = c(1, 1, .1, 0.1, 1, 2), var.grf = 2, mean.grf = 1)
 ```
 
-
-```{r, fig.height = 5, fig.align="center"}
-
-
+We want to plot the point pattern generated above in 2D, so we employ the **spatstat** package where we see our point pattern as a marked spatial point pattern.
+```{r, fig.height = 3, fig.align="center"}
 # Spatstat format
-XX <- ppp(x = PP1$xyt[, 1], y = PP1$xyt[, 2], marks = PP1$xyt[, 3])
+XX <- ppp(x = logGaussianPP$xyt[, 1], y = logGaussianPP$xyt[, 2], 
+          marks = logGaussianPP$xyt[, 3], window = owin())
+# Set the color scheme
 colmap <- colourmap(terrain.colors(120), range = range(marks(XX)))
 sy <- symbolmap(pch = 21, bg = colmap, range = range(marks(XX)))
+# Plotting
 plot(XX, symap = sy, 'log-Gaussian Cox point pattern')
 ```
 
