@@ -194,3 +194,4 @@ plot.imlist(CN, ncols = 5, main = 'Classic fixed-bandwidth estimate')
 plot.imlist(AN, ncols = 5, main = 'Adaptive non-separable estimate')
 ```
 
+
