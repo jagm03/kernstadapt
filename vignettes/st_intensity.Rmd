@@ -143,7 +143,7 @@ Given the test result, we should not assume separability.
 
 ## Estimating global bandwidths
 
-Before using the adaptive estimator, we should set the global bandwidths, i.e., the bandwidths for estimating the pilot intensities. These pilot intensities will assign a particular bandwidth to each data point.
+We select the bandwidths for estimating the pilot intensities.
 
 ```{r}
 # We separate the time column from our point pattern
@@ -158,3 +158,39 @@ bwt0 <- bw.nrd(v) # We employ Scott bandwidth for time
 bwS <- bw.abram(Y, h0 = bwS0)
 bwt <- bw.abram.temp(ti = v, h0 = bwt0)
 ```
+
+## Intensity estimates
+
+We use a fixed-bandwidth kernel estimate for the intensity
+```{r}
+# Fixed bandwidth estimate (non-separable)
+# This could be time consuming
+classic.dens <- spattemp.density(pp = Y, h = bwS0, tt = v, lambda = bwt0,
+                                 sedge = "uniform", sres = 64, tres = 64)
+```
+
+Now we compute the adaptive intensity by using our partitioning algorithm.
+
+```{r}
+# In this case we let the algorithm to choose the numbers of groups
+# It could be time consuming
+adapt.dens <- dens.st.bin(X = Y, t = v, bw.xy = bwS, bw.t = bwt, 
+                          dimyx = 64, dimt = 64, at = "bins")
+```
+
+
+
+We plot some snapshots of the estimates that we have computed. 
+```{r, fig.align="center"}
+# We select some fixed times for visualisation
+I <- c(12, 18, 23, 31, 55)
+
+# We subset the lists
+CN <- as.imlist(classic.dens$z[I])
+AN <- as.imlist(adapt.dens[I])
+
+# We generate the plots
+plot.imlist(CN, ncols = 5, main = 'Classic fixed-bandwidth estimate')
+plot.imlist(AN, ncols = 5, main = 'Adaptive non-separable estimate')
+```
+
