@@ -17,8 +17,6 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup, echo=FALSE, warning=FALSE, message=FALSE}
-library(devtools)
-#devtools::install_github('jagm03/adapt.st', force = T)
 library(kernstadapt)
 library(ggplot2)
 library(stpp)
