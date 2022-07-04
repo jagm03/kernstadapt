@@ -18,7 +18,7 @@ separability.test(X, t,
  \item{nperm}{An integer specifying the number of replicates used in the Monte Carlo test. }
 }
 \details{
-This function performs a basic test of the separability hypothesis in a manner similar to independence test in two-way contingency tables. The test is conditional on the observed number of points. It considers a regular division of the interval \eqn{T} into disjoint sub-intervals \eqn{T_1,...,T_{n_t}} and similarly a division of the window \eqn{W} into disjoint subsets \eqn{W1, ..., W{n_x \timex n_y}}. Then the function computes Fisher's test statistic and get a p-value based on Monte Carlos approximation.
+This function performs a basic test of the separability hypothesis in a manner similar to independence test in two-way contingency tables. The test is conditional on the observed number of points. It considers a regular division of the interval \eqn{T} into disjoint sub-intervals \eqn{T_1,...,T_{n_t}} and similarly a division of the window \eqn{W} into disjoint subsets \eqn{W_1, ..., W{n_x \times n_y}}. Then the function computes Fisher's test statistic and get a p-value based on Monte Carlos approximation.
 }
 \value{
 A list with class "htest" containing the following components:
@@ -37,13 +37,15 @@ Jonatan A. González
 This is a fast preliminary separability test.
 }
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-%\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-%}
 \examples{
 \dontrun{
 data(aegiss)
 separability.test(X = unmark(aegiss), t = marks(aegiss))
+}
+
+\dontrun{
+data(amazon)
+separability.test(X = unmark(amazon), t = marks(amazon),
+                  nx = 10, ny = 10, nt = 20, nperm = 100)
 }
 }
