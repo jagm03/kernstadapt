@@ -44,7 +44,7 @@ logGaussianPP <- rlgcp(npoints = N, nx = 128, ny = 128, nt = 64,
 ```
 
 We want to plot the point pattern generated above in 2D, so we employ the **spatstat** package where we see our point pattern as a marked spatial point pattern.
-```{r, fig.height = 3, fig.align="center"}
+```{r, fig.height = 4.5, fig.align="center"}
 # Spatstat format
 XX <- ppp(x = logGaussianPP$xyt[, 1], y = logGaussianPP$xyt[, 2], 
           marks = logGaussianPP$xyt[, 3], window = owin())
@@ -118,7 +118,7 @@ data("amazon")
 ```
 
 Now, given that the number of points is huge, for visualisation we selec just a sample of 5000.
-```{r, fig.height = 3, fig.align="center"}
+```{r, fig.height = 4.5, fig.align="center"}
 # Extract a sample of 5000 data points
 AmazonReduced <- amazon[sample.int(amazon$n, 5000)]
 
