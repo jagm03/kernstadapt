@@ -195,3 +195,32 @@ plot.imlist(AN, ncols = 5, main = 'Adaptive non-separable estimate')
 ```
 
 ## Dinamic intensity estimate 
+
+```{r, eval = FALSE}
+BB <- lapply(bin.amazonia, as.data.frame)
+B <- do.call("rbind", BB)
+B$Time <- rep(1:256, rep(9586, 256))
+
+library(gganimate)
+ANI <- ggplot() +  #7.5*1.64in
+  geom_raster(data = B, aes(x, y, fill = log(value))) +     
+  scale_fill_distiller(palette = "RdYlGn", direction = -1)+
+  geom_polygon(data = Wpoints, aes(x = x, y = y), fill = NA, color = "black", size = 0.2)+
+  coord_equal() + 
+  theme(axis.title.x = element_blank(), 
+        axis.title.y = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        legend.key.width = unit(0.3,"cm"),
+        plot.background = element_rect(fill = "transparent", color = NA),
+        legend.title = element_blank()) +
+  transition_time(Year) +
+  ease_aes("linear") +
+  enter_fade() +
+  exit_fade()
+animate(ANI)  
+
+```
+
