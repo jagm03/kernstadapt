@@ -14,3 +14,10 @@ check.ngroups <- function(Ngroups, N, order = 2){
   }
   return(ng)
 }
+
+checkt <- function(t){
+  if(is.null(t)) stop("observation times must be supplied as 't' or as a numeric vector of marks to 'X'")
+  if(!is.vector(t)) stop("'t' must be a vector")
+  if(!is.numeric(t)) stop("'t' must be numeric")
+  return(t)
+}
