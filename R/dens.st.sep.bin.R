@@ -1,13 +1,20 @@
 #' @importFrom spatstat.core densityAdaptiveKernel.ppp
 #' @importFrom spatstat.geom eval.im
 #' @export
-dens.st.sep.bin <- function(X, t,
+dens.st.sep.bin <- function(X, t = NULL,
                             bw.xy = NULL, bw.t = NULL, #bandwidths
                             ngroups.xy = NULL, ngroups.t = NULL, #groups
                             dimt = 128, dimyx = 128, #resolution
                             at = c("points", "bins") #at
 )
 {
+  verifyclass(X, "ppp")
+  n <- npoints(X)
+  if(is.null(t)) t <- marks(X)
+  t <- checkt(t)
+  if(length(t) != n)
+    stop(paste("Length of temporal vector does not match number of spatial observations\n   npoints(X) = ",n,"; length(t) = ",length(t), sep = ""))
+
   at <- match.arg(at)
   at.s <- switch (at, bins = "pixels", points = "points")
   if (is.null(bw.xy)) {
