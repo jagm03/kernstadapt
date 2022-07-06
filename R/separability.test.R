@@ -15,7 +15,7 @@ separability.test <- function(X, t = NULL, nx = NULL, ny = NULL, nt = NULL, nper
     nt <- ceiling(n ^ (1/6))
   }
   if(is.null(t)) t <- marks(X)
-  t <- checktt(t)
+  t <- checkt(t)
   if(length(t) != n)
     stop(paste("Length of temporal vector does not match number of spatial observations\n   npoints(X) = ",n,"; length(t) = ",length(t), sep = ""))
 
