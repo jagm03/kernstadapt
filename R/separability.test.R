@@ -13,6 +13,7 @@ separability.test <- function(X, t, nx = NULL, ny = NULL, nt = NULL, nperm = 100
   if (missing(nt) || is.null(nt)) {
     nt <- ceiling(npoints(X) ^ (1/6))
   }
+  X <- unmark(X)
   X <- setmarks(X, t)
   Tj <- split.ppp(cut(X, breaks = nt))
   ok <- sapply(Tj, npoints) > 0   # removing zero pp

@@ -204,7 +204,7 @@ Wpoints <- as.data.frame(window(amazon))
 
 library(gganimate)
 ANI <- ggplot() +  #7.5*1.64in
-  geom_raster(data = merged.times, aes(x, y, fill = value)) +     
+  geom_raster(data = merged.times, aes(x, y, fill = log(value))) +     
   scale_fill_distiller(palette = "RdYlGn", direction = -1)+
   geom_polygon(data = Wpoints, aes(x = x, y = y), fill = NA, color = "black", size = 0.2)+
   coord_equal() + 
