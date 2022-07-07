@@ -21,7 +21,6 @@ library(kernstadapt)
 library(ggplot2)
 library(stpp)
 library(sparr)
-library(misc3d)
 ```
 
 # First example: Log-Gaussian spatio-temporal point pattern
@@ -136,7 +135,7 @@ plot(AmazonReduced, symap = sy, 'Sample of Amazonia fires')
 Before estimating the intensity, it is very convenient to know whether separability holds. When separability holds, estimating the spatio-temporal intensity becomes easier and faster. So we perform a separability test to have an approximate answer to that question. The test is performed in a Monte Carlo fashion; therefore, we have to fix a number of Monte Carlo samples prior to the test, say 1500.
 
 ```{r}
-separability.test(X = unmark(amazon), t = amazon$marks, nperm = 1500)
+separability.test(X = amazon, nperm = 1500)
 ```
 
 Given the test result, we should not assume separability.
@@ -146,17 +145,13 @@ Given the test result, we should not assume separability.
 We select the bandwidths for estimating the pilot intensities.
 
 ```{r}
-# We separate the time column from our point pattern
-Y <- unmark(amazon)
-v <- amazon$marks
-
 # Global bandwidths
-bwS0 <- OS(Y) # The spatial bandwidth will be the oversmoothing version
-bwt0 <- bw.nrd(v) # We employ Scott bandwidth for time 
+bwS0 <- OS(amazon) # The spatial bandwidth will be the oversmoothing version
+bwt0 <- bw.nrd(amazon$marks) # We employ Scott bandwidth for time 
 
 # Spatial and temporal bandwidths based on pilot estimations
-bwS <- bw.abram(Y, h0 = bwS0)
-bwt <- bw.abram.temp(ti = v, h0 = bwt0)
+bwS <- bw.abram(amazon, h0 = bwS0)
+bwt <- bw.abram.temp(ti = amazon$marks, h0 = bwt0)
 ```
 
 ## Intensity estimates
@@ -174,7 +169,7 @@ Now we compute the adaptive intensity by using our partitioning algorithm.
 ```{r}
 # In this case we let the algorithm to choose the numbers of groups
 # It could be time consuming
-adapt.dens <- dens.st.bin(X = Y, t = v, bw.xy = bwS, bw.t = bwt, 
+adapt.dens <- dens.st.bin(X = amazon, bw.xy = bwS, bw.t = bwt, 
                           dimyx = 64, dimt = 64, at = "bins")
 ```
 
@@ -197,31 +192,12 @@ plot.imlist(AN, ncols = 5, main = 'Adaptive non-separable estimate')
 ## Dinamic intensity estimate 
 
 ```{r, eval = FALSE}
-each.time <- lapply(adapt.dens, as.data.frame)
-merged.times <- do.call("rbind", each.time)
-merged.times$Time <- rep(1:64, rep(length(each.time[[1]]$x), 64))
-Wpoints <- as.data.frame(window(amazon))
-
-library(gganimate)
-ANI <- ggplot() +  #7.5*1.64in
-  geom_raster(data = merged.times, aes(x, y, fill = log(value))) +     
-  scale_fill_distiller(palette = "RdYlGn", direction = -1)+
-  geom_polygon(data = Wpoints, aes(x = x, y = y), fill = NA, color = "black", size = 0.2)+
-  coord_equal() + 
-  theme(axis.title.x = element_blank(), 
-        axis.title.y = element_blank(),
-        axis.ticks.x = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.text.x = element_blank(),
-        axis.text.y = element_blank(),
-        legend.key.width = unit(0.3,"cm"),
-        plot.background = element_rect(fill = "transparent", color = NA),
-        legend.title = element_blank()) +
-  transition_time(Year) +
-  ease_aes("linear") +
-  enter_fade() +
-  exit_fade()
-animate(ANI)  
+animation::saveVideo(
+  for(i in 1:length(adapt.dens)){
+    plot(adapt.dens[[i]], main = paste("Time",i))
+  },
+  video.name="fmd.mp4", other.opts = '-b:v 1M -pix_fmt yuv420p', 
+  ani.width = 640, ani.height = 640, interval = 1 / 12)
 
 ```
 
