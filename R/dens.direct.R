@@ -5,14 +5,20 @@
 #' @importFrom sparr OS
 #' @importFrom stats pnorm
 #' @export
-dens.adapt.direct <- function(X, t,
+dens.adapt.direct <- function(X, t = NULL,
                               bw.xy = NULL, bw.t = NULL, #bandwidths
                               dimt = 128, dimyx = 128, #resolution
                               at = c("points", "bins") #at
 ){
-  at <- match.arg(at)
+  verifyclass(X, "ppp")
+  n <- npoints(X)
+  if(is.null(t)) t <- marks(X)
+  t <- checkt(t)
   nT <- length(t)
-  if(nT != X$n) stop(paste("Length of temporal vector does not match number of spatial observations"))
+  if(nT != n)
+    stop(paste("Length of temporal vector does not match number of spatial observations\n   npoints(X) = ",n,"; length(t) = ",length(t), sep = ""))
+
+  at <- match.arg(at)
   range.t <- range(t)
 
   if (missing(bw.t) || is.null(bw.t)) {
