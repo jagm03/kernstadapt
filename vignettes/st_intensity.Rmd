@@ -196,7 +196,7 @@ animation::saveVideo(
   for(i in 1:length(adapt.dens)){
     plot(adapt.dens[[i]], main = paste("Time",i))
   },
-  video.name="fmd.mp4", other.opts = '-b:v 1M -pix_fmt yuv420p', 
+  video.name="amazon.mp4", other.opts = '-b:v 1M -pix_fmt yuv420p', 
   ani.width = 640, ani.height = 640, interval = 1 / 12)
 
 ```
