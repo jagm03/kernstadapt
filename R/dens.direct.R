@@ -48,7 +48,7 @@ dens.adapt.direct <- function(X, t = NULL,
                                                          sres = dimyx,
                                                          tres = dimt))
   ZZ <- Reduce("+", Z)
-  WM <- as.mask(X$window)
+  WM <- as.mask(X$window, dimyx = dimyx)
   inside <- WM$m
   grx <- WM$xcol
   gry <- WM$yrow
