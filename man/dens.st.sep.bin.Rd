@@ -12,7 +12,6 @@ dens.st.sep.bin(X, t, bw.xy = NULL, bw.t = NULL,
   dimt = 128, dimyx = 128,
   at = c("points", "bins"))
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{X}{A spatial point pattern (an object of class \code{ppp}) with the spatial coordinates of the observations}
   \item{t}{A numeric vector of temporal coordinates with equal length to the number of points in \code{X}. This gives the time associated with each spatial point.}
@@ -23,7 +22,6 @@ dens.st.sep.bin(X, t, bw.xy = NULL, bw.t = NULL,
   \item{dimt}{Temporal bin vector dimension. The default is 128.}
   \item{dimyx}{Spatial pixel resolution. The default is 128 for each axes.}
   \item{at}{String specifying whether to estimate the intensity at a mesh (\code{at = "bins"}) or only at the points of \code{X} (\code{at = "points"}).}
-%%     ~~Describe \code{x} here~~
 }
 \details{
 This function computes a spatio-temporal adaptive kernel estimate of the intensity in a separable fashion. It starts from a planar point pattern \code{X} and a vector of times \code{t} and uses partition techniques separately for the spatial and temporal components, then it multiplies both components and normalises by the number of points to preserve the mass.
@@ -34,20 +32,9 @@ The method partition the range of bandwidths into intervals, subdividing the poi
 \value{
 If \code{at = "points"} (the default), the result is a numeric vector with one entry for each data point in \code{X}. if \code{at = "bins"} is a list named (by time-point) list of pixel images (\link[spatstat.geom]{im} objects) corresponding to the joint spatio-temporal intensity over space at each discretised time bin.
 }
-%\references{
-%% ~put references to the literature/web site here ~
-%}
 \author{
 Jonatan A. González
 }
-%\note{
-%%  ~~further notes~~
-%}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-%\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-%}
 \examples{
 \dontrun{
 X <- rpoispp(1400)
