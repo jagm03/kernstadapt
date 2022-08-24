@@ -1,5 +1,6 @@
 #' @export
 dens.t.bin <- function(ti, bw = NULL, ngroups = NULL, dimt = 128, at = c("points", "bins")){
+  stopifnot(sum(ti < 0) == 0)
   at <- match.arg(at)
   nT <- length(ti)
   range.t <- range(ti)
