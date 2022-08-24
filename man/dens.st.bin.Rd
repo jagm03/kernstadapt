@@ -23,7 +23,6 @@ dens.st.bin(X, t,
   \item{dimt}{Temporal bin vector dimension. The default is 128.}
   \item{dimyx}{Spatial pixel resolution. The default is 128 for each axes.}
   \item{at}{String specifying whether to estimate the intensity at a mesh (\code{at = "bins"}) or only at the points of \code{X} (\code{at = "points"}).}
-%%     ~~Describe \code{x} here~~
 }
 \details{
 This function computes a non-separable spatio-temporal adaptive kernel estimate of the intensity. It starts from a planar point pattern \code{X} and a vector of times \code{t} and partition (cells) the spatial and temporal components to apply a non-separable kernel estimator within each cell.
@@ -34,20 +33,9 @@ The method partition the range of bandwidths into intervals, subdividing the poi
 \value{
 If \code{at = "points"} (the default), the result is a numeric vector with one entry for each data point in \code{X}. if \code{at = "bins"} is a list named (by time-point) list of pixel images (\link[spatstat.geom]{im} objects) corresponding to the joint spatio-temporal intensity over space at each discretised time bin.
 }
-%\references{
-%% ~put references to the literature/web site here ~
-%}
 \author{
 Jonatan A. González
 }
-%\note{
-%%  ~~further notes~~
-%}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-%\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-%}
 \examples{
 \dontrun{
 X <- rpoispp(1400)
