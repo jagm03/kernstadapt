@@ -10,7 +10,7 @@ Provides an adaptive-bandwidth kernel estimate for spatio-temporal point pattern
 dens.st.sep.bin(X, t, bw.xy = NULL, bw.t = NULL,
   ngroups.xy = NULL, ngroups.t = NULL,
   dimt = 128, dimyx = 128,
-  at = c("points", "bins"))
+  at = c("bins", "points"))
 }
 \arguments{
   \item{X}{A spatial point pattern (an object of class \code{ppp}) with the spatial coordinates of the observations}

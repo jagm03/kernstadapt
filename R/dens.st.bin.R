@@ -7,7 +7,7 @@ dens.st.bin <- function(X, t = NULL,
                         bw.xy = NULL, bw.t = NULL, #bandwidths
                         ngroups.xy = NULL, ngroups.t = NULL, #groups
                         dimt = 128, dimyx = 128, #resolution
-                        at = c("points", "bins") #at
+                        at = c("bins", "points") #at
 ){
   verifyclass(X, "ppp")
   n <- npoints(X)
