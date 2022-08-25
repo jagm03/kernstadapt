@@ -7,7 +7,7 @@ Non-separable adaptive spatio-temporal intensity estimator
 Provides an adaptive-bandwidth kernel estimate for spatio-temporal point patterns in a non-separable fashion by using binning of the bandwidth values.
 }
 \usage{
-dens.st.bin(X, t,
+dens.st.bin(X, t = NULL,
             bw.xy = NULL, bw.t = NULL,
             ngroups.xy = NULL, ngroups.t = NULL,
             dimt = 128, dimyx = 128,
