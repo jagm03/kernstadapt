@@ -16,6 +16,7 @@
 #' @return
 #' If \code{at = "points"} (the default), the result is a numeric vector with one entry for each data point in \code{X}. if \code{at = "bins"} is a list named (by time-point) list of pixel images (\link[spatstat.geom]{im} objects) corresponding to the joint spatio-temporal intensity over space at each discretised time bin.
 #' @author Jonatan A. González
+#'
 #' @examples
 #' \dontrun{
 #' X <- rpoispp(400)
