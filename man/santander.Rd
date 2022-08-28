@@ -21,19 +21,15 @@ A spatio-temporal point pattern of locations and times of earthquake epicentres 
   See \code{\link[spatstat.geom]{ppp.object}} for details of the format.
 }
 \source{
-González et. al., (2021) Classification of Events Using Local Pair Correlation Functions for Spatial Point Patterns. \emph{Journal of Agricultural, Biological and Environmental Statistics.} 26(4) \bold{538-559.}
+Colombian national geologic institute, \url{https://www.sgc.gov.co/}
 }
 \references{
-Diggle, L. Knorr-Held, R. B, T. Su, P. Hawtin, and T. Bryant. (2003)
-On-line monitoring of public health surveillance data.
-In B. R. and S. D.F., editors, Monitoring the Health of Populations:
-\emph{Statistical Principles and Methods for Public Health Surveillance.} \bold{233–266}.
-Oxford University Press.
+González et. al., (2021) Classification of Events Using Local Pair Correlation Functions for Spatial Point Patterns. \emph{Journal of Agricultural, Biological and Environmental Statistics.} 26(4) \bold{538-559.}
 }
 \examples{
-data(aegiss)
-head(aegiss)
-plot(aegiss, bg = terrain.colors(20), pch = 21, cex = 1)
+data(santander)
+head(santander)
+plot(santander, bg = rainbow(250), pch = 21, cex = 1)
 }
 \keyword{datasets}
-\keyword{aegiss}
+\keyword{santander}
