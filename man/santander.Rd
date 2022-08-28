@@ -21,7 +21,7 @@ A spatio-temporal point pattern of locations and times of earthquake epicentres 
   See \code{\link[spatstat.geom]{ppp.object}} for details of the format.
 }
 \source{
-
+González et. al., (2021) Classification of Events Using Local Pair Correlation Functions for Spatial Point Patterns. \emph{Journal of Agricultural, Biological and Environmental Statistics.} 26(4) \bold{538-559.}
 }
 \references{
 Diggle, L. Knorr-Held, R. B, T. Su, P. Hawtin, and T. Bryant. (2003)
