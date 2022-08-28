@@ -38,6 +38,15 @@ Provides an adaptive-bandwidth kernel estimate for spatio-temporal point pattern
 \details{
 This function computes a non-separable spatio-temporal adaptive kernel estimate of the intensity. It starts from a planar point pattern \code{X} and a vector of times \code{t} and apply a non-separable kernel estimator for each of the points of \code{X}. The arguments \code{bw.xy} and \code{bw.t} specify the smoothing bandwidth vectors to be applied to each of the points in \code{X} and \code{t}. They should be a numeric vectors of bandwidths.
 }
+\examples{
+\dontrun{
+X <- rpoispp(400)
+t <- rbeta(X$n, 1,4,0.8)
+stIntensity <- dens.adapt.direct(X,t, at = "bins", dimt = 32)
+plot(as.imlist(stIntensity[13:16]), main = 'Non-separable direct example')
+}
+
+}
 \author{
 Jonatan A. González
 }
