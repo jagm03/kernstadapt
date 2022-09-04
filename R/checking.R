@@ -21,7 +21,7 @@ checkt <- function(t){
     return(B - min(B))
   }
   else {
-    if(is.null(t)) stop("observation times must be supplied as 't' or as a numeric vector of marks to 'X'")
+    if(is.null(t)) stop("observation times must be supplied as 't' or as a vector of marks to 'X'.")
     if(!is.vector(t)) stop("'t' must be a vector")
     if(!is.numeric(t)) stop("'t' must be numeric")
     if(sum(t < 0) != 0) stop("'t' must have non-negative components")
