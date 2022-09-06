@@ -13,6 +13,7 @@
 #'@export
 bw.abram.temp <- function (ti, h0 = NULL, trim = 5, nt = 128, at = "points")
 {
+  ti <- checkt(ti)
   stopifnot(sum(ti < 0) == 0)
   if (missing(h0) || is.null(h0)) {
     h0 <- bw.nrd0(ti)
