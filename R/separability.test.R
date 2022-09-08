@@ -41,7 +41,9 @@
 #' @importFrom spatstat.geom verifyclass cut.ppp quadratcount.ppp
 #' @importFrom stats fisher.test
 #' @export
-separability.test <- function(X, t = NULL, nx = NULL, ny = NULL, nt = NULL, nperm = 1000)
+separability.test <- function(X, t = NULL,
+                              nx = NULL, ny = NULL, nt = NULL,
+                              nperm = 1000)
 {
   verifyclass(X, "ppp")
   n <- npoints(X)
