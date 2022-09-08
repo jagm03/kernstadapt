@@ -32,7 +32,9 @@
 #' }
 #'
 #' @export
-dens.t.bin <- function(ti, bw = NULL, ngroups = NULL, dimt = 128, at = c("points", "bins")){
+dens.t.bin <- function(ti, bw = NULL, dimt = 128,
+                       ngroups = NULL,
+                       at = c("points", "bins")){
   stopifnot(sum(ti < 0) == 0)
   at <- match.arg(at)
   nT <- length(ti)
