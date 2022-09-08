@@ -2,6 +2,7 @@
 
 export(bw.abram.temp)
 export(dens.adapt.direct)
+export(dens.sep.direct)
 export(dens.st.bin)
 export(dens.st.sep.bin)
 export(dens.t.bin)
