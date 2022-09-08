@@ -53,10 +53,21 @@ dens.st.sep.bin <- function(X, t = NULL,
     h0 <- OS(X)
     bw.xy <- bw.abram(X, h0)
   }
-  Mtemporal <- dens.t.bin(ti = t, bw = bw.t, ngroups = ngroups.t,
+  if (missing(bw.t) || is.null(bw.t)) {
+    bw.t <- bw.abram.temp(t)
+  }
+  else if (is.numeric(bw.t)) {
+    check.nvector(bw.t, nT, oneok = TRUE)
+    if (length(bw.t) == 1)
+      bw.t <- rep(bw.t, nT)
+  }
+
+  Mtemporal <- dens.t.bin(ti = t, bw = bw.t,
+                          ngroups = ngroups.t,
                           dimt = dimt, at = at)
   Mspatial <- densityAdaptiveKernel.ppp(unmark(X), bw = bw.xy, at = at.s,
-                                        dimyx = dimyx, edge = T, ngroups = ngroups.xy)
+                                        dimyx = dimyx, edge = T,
+                                        ngroups = ngroups.xy)
   Mst <- switch(at,
                 points = Mtemporal * Mspatial / length(t),
                 bins = lapply(Mtemporal$y, function(x) eval.im(Mspatial * x / length(t)))
