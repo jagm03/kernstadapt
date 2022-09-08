@@ -1,13 +1,13 @@
-#' Separable adaptive spatio-temporal intensity estimator
+#' Direct separable adaptive spatio-temporal intensity estimator
 #'
-#' Provides an adaptive-bandwidth kernel estimate for spatio-temporal point patterns in a separable fashion, i.e., by multiplying spatial and temporal marginals.
+#' Provides an adaptive-bandwidth kernel estimate for spatio-temporal point patterns in a separable fashion, i.e., by multiplying spatial and temporal marginals. This estimation is performed by calculating the classical estimator, i.e., the slowest estimation.
 #'
 #' @param X A spatial point pattern (an object of class \code{ppp}) with the spatial coordinates of the observations.
 #' @param t A numeric vector of temporal coordinates with equal length to the number of points in \code{X}. This gives the time associated with each spatial point.
+#' @param dimyx Spatial pixel resolution. The default is 128 for each axes.
+#' @param dimt Temporal bin vector dimension. The default is 128.
 #' @param bw.xy Numeric vector of spatial smoothing bandwidths for each point in \code{X}. By default this is computed usign \link[spatstat.core]{bw.abram}.
 #' @param bw.t Numeric vector of temporal smoothing bandwidths for each point in \code{t}. By default this is computed usign \link{bw.abram.temp}.
-#' @param dimt Temporal bin vector dimension. The default is 128.
-#' @param dimyx Spatial pixel resolution. The default is 128 for each axes.
 #' @param at String specifying whether to estimate the intensity at a mesh (\code{at = "bins"}) or only at the points of \code{X} (\code{at = "points"}).
 #'
 #' @details
