@@ -11,7 +11,7 @@
 #' @details
 #' This function computes a temporally-adaptive kernel estimate of the intensity from a one-dimensional point pattern t using the partitioning technique of Davies and Baddeley (2018).
 #' The argument bw.t specifies the smoothing bandwidths to be applied to each of the points in X. It should be a numeric vector of bandwidths.
-#' Let the points of \eqn{ti} be \eqn{t_1, ..., t_n} and the corresponding bandwidths \eqn{\sigma_1,...,\sigma_n}, then the adaptive kernel estimate of intensity at a location \eqn{v} is
+#' Let the points of \eqn{t} be \eqn{t_1, ..., t_n} and the corresponding bandwidths \eqn{\sigma_1,...,\sigma_n}, then the adaptive kernel estimate of intensity at a location \eqn{v} is
 #' \deqn{\lambda(v) = \sum_{i=1}^n \frac{K(v,t_i; \sigma_i)}{c(t; \sigma_i)}}
 #' where \eqn{K()} is the Gaussian smoothing kernel.
 #' The method partition the range of bandwidths into ngroups.t intervals, correspondingly subdividing the points of the pattern \code{t} into ngroups.t sub-patterns according to bandwidth, and applying fixed-bandwidth smoothing to each sub-pattern. Specifying \code{ngroups.t = 1} is the same as fixed-bandwidth smoothing with bandwidth \code{sigma = median(bw.t)}.
@@ -34,21 +34,21 @@
 #' @export
 dens.par.temp <- function(t, bw.t = NULL,
                           dimt = 128,
-                          ngroups.t.t = NULL,
+                          ngroups.t = NULL,
                           at = c("points", "bins")){
   stopifnot(sum(ti < 0) == 0)
   at <- match.arg(at)
   nT <- length(t)
   range.t <- range(t)
-  if (missing(ngroups.t.t) || is.null(ngroups.t.t)) {
+  if (missing(ngroups.t) || is.null(ngroups.t)) {
     ngroups.t <- max(1L, floor(sqrt(nT)))
   }
-  else if (any(is.infinite(ngroups.t.t))) {
+  else if (any(is.infinite(ngroups.t))) {
     ngroups.t <- nT
   }
   else {
-    check.1.integer(ngroups.t.t)
-    ngroups.t.t <- min(nT, ngroups.t.t)
+    check.1.integer(ngroups.t)
+    ngroups.t <- min(nT, ngroups.t)
   }
 
   if (missing(bw.t) || is.null(bw.t)) {
