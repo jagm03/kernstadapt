@@ -4,9 +4,9 @@
 #'
 #' @param t Temporal point pattern, a vector with observations.
 #' @param dimt Bin vector dimension. The default is 128.
-#' @param bw.t Numeric vector of smoothing bandwidths for each point in ti. The default is to compute bandwidths using \link{bw.abram.temp}.
-#' @param ngroups.t Number of groups into which the bandwidths should be partitioned and discretised. The default is the square root (rounded) of the number of points of \code{ti}.
-#' @param at String specifying whether to estimate the intensity at bins points (\code{at = "bins"}) or only at the points of ti (\code{at = "points"}).
+#' @param bw.t Numeric vector of smoothing bandwidths for each point in t. The default is to compute bandwidths using \link{bw.abram.temp}.
+#' @param ngroups.t Number of groups into which the bandwidths should be partitioned and discretised. The default is the square root (rounded) of the number of points of \code{t}.
+#' @param at String specifying whether to estimate the intensity at bins points (\code{at = "bins"}) or only at the points of t (\code{at = "points"}).
 #'
 #' @details
 #' This function computes a temporally-adaptive kernel estimate of the intensity from a one-dimensional point pattern t using the partitioning technique of Davies and Baddeley (2018).
@@ -36,7 +36,7 @@ dens.par.temp <- function(t, bw.t = NULL,
                           dimt = 128,
                           ngroups.t = NULL,
                           at = c("points", "bins")){
-  stopifnot(sum(ti < 0) == 0)
+  stopifnot(sum(t < 0) == 0)
   at <- match.arg(at)
   nT <- length(t)
   range.t <- range(t)
