@@ -28,11 +28,11 @@
 #' @examples
 #' \dontrun{
 #' ti <- rbeta(100, 1,4,0.8)
-#' dens.t.bin(ti)
+#' dens.par.temp(ti)
 #' }
 #'
 #' @export
-dens.t.bin <- function(ti, bw = NULL, dimt = 128,
+dens.par.temp <- function(ti, bw = NULL, dimt = 128,
                        ngroups = NULL,
                        at = c("points", "bins")){
   stopifnot(sum(ti < 0) == 0)
