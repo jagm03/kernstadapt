@@ -1,6 +1,6 @@
 #' Computes adaptive smoothing bandwidth in the temporal case according to the inverse-square-root rule of Abramson (1982).
 #'
-#'@param ti A vector (a temporal point pattern) for which the bandwidths should be computed.
+#'@param t A vector (a temporal point pattern) for which the bandwidths should be computed.
 #'@param h0 The global smoothing bandwidth. The default is Silverman's rule of thumb (bw.nrd0).
 #'@param trim A trimming value to cut extreme large bandwidths.
 #'@param nt The number of equally spaced points at which the temporal density is to be estimated.
@@ -11,12 +11,12 @@
 #'@importFrom stats bw.nrd0 density.default approxfun
 #'@importFrom spatstat.utils check.1.real
 #'@export
-bw.abram.temp <- function (ti, h0 = NULL, trim = 5, nt = 128, at = "points")
+bw.abram.temp <- function (t, h0 = NULL, trim = 5, nt = 128, at = "points")
 {
-  ti <- checkt(ti)
-  stopifnot(sum(ti < 0) == 0)
+  t <- checkt(t)
+  stopifnot(sum(t < 0) == 0)
   if (missing(h0) || is.null(h0)) {
-    h0 <- bw.nrd0(ti)
+    h0 <- bw.nrd0(t)
   }
   else {
     check.1.real(h0)
@@ -24,8 +24,8 @@ bw.abram.temp <- function (ti, h0 = NULL, trim = 5, nt = 128, at = "points")
   }
   check.1.real(trim)
   stopifnot(trim > 0)
-  pilot.data <- ti
-  pilot <- density.default(ti, bw = h0, kernel = "gaussian", n = nt)
+  pilot.data <- t
+  pilot <- density.default(t, bw = h0, kernel = "gaussian", n = nt)
   pilotfun <- approxfun(pilot$x, pilot$y)
   pilotvalues <- pilotfun(pilot.data)
   gamma <- exp(mean(log(pilotvalues[pilotvalues > 0]))) ^ (- 0.5)
