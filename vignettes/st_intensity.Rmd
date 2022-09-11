@@ -49,7 +49,7 @@ XX <- ppp(x = logGaussianPP$xyt[, 1], y = logGaussianPP$xyt[, 2],
           marks = logGaussianPP$xyt[, 3], window = owin())
 
 # Set the color scheme
-colmap <- colourmap(terrain.colors(120), range = range(marks(XX)))
+colmap <- colourmap(rainbow(512), range = range(marks(XX)))
 sy <- symbolmap(pch = 21, bg = colmap, range = range(marks(XX)))
 
 # Plotting
@@ -61,17 +61,13 @@ plot(XX, symap = sy, 'log-Gaussian Cox point pattern')
 Before using the adaptive estimator, we should set the global bandwidths, i.e., the bandwidths for estimating the pilot intensities. These pilot intensities will assign a particular bandwidth to each data point.
 
 ```{r}
-# We separate the time column from our point pattern
-Y <- unmark(XX)
-v <- XX$marks
-
 # Global bandwidths
-bwS0 <- OS(Y) # The spatial bandwidth will be the oversmoothing version
-bwt0 <- bw.SJ(v) # We employ Sheather & Jones's bandwidth for time 
+bwS0 <- OS(XX) # The spatial bandwidth will be the oversmoothing version
+bwt0 <- bw.SJ(XX$marks) # We employ Sheather & Jones's bandwidth for time 
 
 # Spatial and temporal bandwidths based on pilot estimations
-bwS <- bw.abram(Y, h0 = bwS0)
-bwt <- bw.abram.temp(ti = v, h0 = bwt0)
+bwS <- bw.abram(unmark(XX), h0 = bwS0)
+bwt <- bw.abram.temp(t = XX$marks, h0 = bwt0)
 ```
 
 ## Intensity estimates
@@ -79,16 +75,20 @@ bwt <- bw.abram.temp(ti = v, h0 = bwt0)
 First we use a fixed-bandwidth kernel estimate for the intensity using a function provided by the **sparr** package.
 ```{r}
 # Fixed bandwidth estimate (non-separable)
-classic.dens <- spattemp.density(pp = Y, h = bwS0, tt = v, lambda = bwt0,
-                                 sedge = "uniform", sres = 128, tres = 64)
+classic.dens <- spattemp.density(pp = unmark(XX), h = bwS0, tt = XX$marks,
+                                 sres = 128, tres = 64,
+                                 lambda = bwt0,
+                                 sedge = "uniform")
 ```
 Now we compute the adaptive intensity by using our partitioning algorithm. For doing that, we have to set first a fixed number of groups for the spatial and the temporal bandwidths; it could be done manually or let the function decide based on a rule-of-thumb. In addition, we set a temporal resolution of 64 pixels (the default is 128 for space and for time). We can evaluate the intensity at the data points (at = "points"), or obtain snapshots (at = "bins", the default).
 
 ```{r}
 # In this case we use 8 groups for space and 4 for time
-adapt.dens <- dens.st.bin(X = Y, t = v, bw.xy = bwS, bw.t = bwt, 
-                          ngroups.xy = 8, ngroups.t = 4,
-                          dimt = 64, at = "bins")
+adapt.dens <- dens.par(X = XX, 
+                       dimt = 64,
+                       bw.xy = bwS, bw.t = bwt, 
+                       ngroups.xy = 8, ngroups.t = 4,
+                       at = "bins")
 ```
 
 
@@ -122,7 +122,7 @@ Now, given that the number of points is huge, for visualisation we selec just a 
 AmazonReduced <- amazon[sample.int(amazon$n, 5000)]
 
 # Set the color scheme
-colmap <- colourmap(heat.colors(120), range = range(marks(AmazonReduced)))
+colmap <- colourmap(rainbow(512), range = range(marks(AmazonReduced)))
 sy <- symbolmap(pch = 21, bg = colmap, range = range(marks(AmazonReduced)))
 
 # Plotting
@@ -151,7 +151,7 @@ bwt0 <- bw.nrd(amazon$marks) # We employ Scott bandwidth for time
 
 # Spatial and temporal bandwidths based on pilot estimations
 bwS <- bw.abram(amazon, h0 = bwS0)
-bwt <- bw.abram.temp(ti = amazon$marks, h0 = bwt0)
+bwt <- bw.abram.temp(t = amazon$marks, h0 = bwt0)
 ```
 
 ## Intensity estimates
@@ -160,8 +160,10 @@ We use a fixed-bandwidth kernel estimate for the intensity
 ```{r}
 # Fixed bandwidth estimate (non-separable)
 # This could be time consuming
-classic.dens <- spattemp.density(pp = Y, h = bwS0, tt = v, lambda = bwt0,
-                                 sedge = "uniform", sres = 64, tres = 64)
+classic.dens <- spattemp.density(pp = unmark(amazon), h = bwS0, tt = amazon$marks,
+                                 sres = 64, tres = 64,
+                                 lambda = bwt0,
+                                 sedge = "uniform")
 ```
 
 Now we compute the adaptive intensity by using our partitioning algorithm.
@@ -169,11 +171,11 @@ Now we compute the adaptive intensity by using our partitioning algorithm.
 ```{r}
 # In this case we let the algorithm to choose the numbers of groups
 # It could be time consuming
-adapt.dens <- dens.st.bin(X = amazon, bw.xy = bwS, bw.t = bwt, 
-                          dimyx = 64, dimt = 64, at = "bins")
+adapt.dens <- dens.par(X = amazon, 
+                       dimyx = 64, dimt = 64,
+                       bw.xy = bwS, bw.t = bwt, 
+                       at = "bins")
 ```
-
-
 
 We plot some snapshots of the estimates that we have computed. 
 ```{r, fig.align="center"}
