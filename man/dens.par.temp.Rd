@@ -15,13 +15,13 @@ dens.par.temp(
 \arguments{
 \item{t}{Temporal point pattern, a vector with observations.}
 
-\item{bw.t}{Numeric vector of smoothing bandwidths for each point in ti. The default is to compute bandwidths using \link{bw.abram.temp}.}
+\item{bw.t}{Numeric vector of smoothing bandwidths for each point in t. The default is to compute bandwidths using \link{bw.abram.temp}.}
 
 \item{dimt}{Bin vector dimension. The default is 128.}
 
-\item{ngroups.t}{Number of groups into which the bandwidths should be partitioned and discretised. The default is the square root (rounded) of the number of points of \code{ti}.}
+\item{ngroups.t}{Number of groups into which the bandwidths should be partitioned and discretised. The default is the square root (rounded) of the number of points of \code{t}.}
 
-\item{at}{String specifying whether to estimate the intensity at bins points (\code{at = "bins"}) or only at the points of ti (\code{at = "points"}).}
+\item{at}{String specifying whether to estimate the intensity at bins points (\code{at = "bins"}) or only at the points of t (\code{at = "points"}).}
 }
 \value{
 If \code{at = "points"} (the default), the result is a numeric vector with one entry for each data point in \code{t}. If \code{at = "bins"} the result is a data.frame containing the \eqn{x,y} coordinates of the intensity function.
