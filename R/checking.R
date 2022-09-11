@@ -16,7 +16,7 @@ check.ngroups <- function(Ngroups, N, order = 2){
 }
 
 checkt <- function(t){
-  if(class(t) == "Date"){
+  if(inherits(t, "Date")){
     B <- as.numeric(t)
     return(B - min(B))
   }
