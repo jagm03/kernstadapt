@@ -29,13 +29,13 @@ library(ggplot2)
 # Setting a simulation of temporal point pattern with a hotspot
 # intensity for Nt points
 Nt <- 2000
-y1 <- rt(Nt, Inf)
+y1 <- rnorm(Nt, 10, 0.1)
 
 # fixed bandwidth estimate
 classic.dens <- density.default(y1, from = min(y1), to = max(y1))
 classic.dens$y <- classic.dens$y * Nt
-adapt.dens <- dens.t.bin(y1, at = "bins", dimt = 512)
-true.dens <- Nt * dt(classic.dens$x, Inf)
+adapt.dens <- dens.par.temp(y1, at = "bins", dimt = 512)
+true.dens <- Nt * dnorm(classic.dens$x, 10, 0.1)
 
 ##ISE
 ISE.adapt <- (sum(adapt.dens$y - true.dens) ^ 2) * diff(adapt.dens$x[1:2])
@@ -68,7 +68,7 @@ bw0 <- bw.nrd0(y) / 4
 # Abram's bandwidth
 bw1 <- bw.abram.temp(y, h0 = bw0, trim = 2)
 # Adaptive intensity
-adapt.dens <- dens.t.bin(y, bw = bw1, at = "bins", dimt = 512)
+adapt.dens <- dens.par.temp(y, bw = bw1, at = "bins", dimt = 512)
 true.dens <- Nt * fdens.x(adapt.dens$x)
 
 ##ISE
