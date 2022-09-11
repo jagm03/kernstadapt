@@ -44,6 +44,7 @@ dens.par.sep <- function(X, t = NULL,
   n <- npoints(X)
   if(is.null(t)) t <- marks(X)
   t <- checkt(t)
+  nT <- length(t)
   if(length(t) != n)
     stop(paste("Length of temporal vector does not match number of spatial observations\n   npoints(X) = ",n,"; length(t) = ",length(t), sep = ""))
 
