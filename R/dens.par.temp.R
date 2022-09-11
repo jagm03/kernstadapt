@@ -2,22 +2,22 @@
 #'
 #' Estimates the intensity of a point process with only temporal dimension by applying an adaptive (variable bandwidth) Gaussian edge-corrected kernel smoothing.
 #'
-#' @param ti Temporal point pattern, a vector with observations.
-#' @param bw Numeric vector of smoothing bandwidths for each point in ti. The default is to compute bandwidths using \link{bw.abram.temp}.
-#' @param ngroups Number of groups into which the bandwidths should be partitioned and discretised. The default is the square root (rounded) of the number of points of \code{ti}.
+#' @param t Temporal point pattern, a vector with observations.
 #' @param dimt Bin vector dimension. The default is 128.
+#' @param bw.t Numeric vector of smoothing bandwidths for each point in ti. The default is to compute bandwidths using \link{bw.abram.temp}.
+#' @param ngroups.t Number of groups into which the bandwidths should be partitioned and discretised. The default is the square root (rounded) of the number of points of \code{ti}.
 #' @param at String specifying whether to estimate the intensity at bins points (\code{at = "bins"}) or only at the points of ti (\code{at = "points"}).
 #'
 #' @details
-#' This function computes a temporally-adaptive kernel estimate of the intensity from a one-dimensional point pattern ti using the partitioning technique of Davies and Baddeley (2018).
-#' The argument bw specifies the smoothing bandwidths to be applied to each of the points in X. It should be a numeric vector of bandwidths.
-#' Let the points of \eqn{ti} be \eqn{t_1, ..., t_n} and the corresponding bandwidths \eqn{\sigma_1,...,\sigma_n}, then the adaptive kernel estimate of intensity at a location \eqn{t} is
-#' \deqn{\lambda(t) = \sum_{i=1}^n \frac{K(t,t_i; \sigma_i)}{c(t; \sigma_i)}}
+#' This function computes a temporally-adaptive kernel estimate of the intensity from a one-dimensional point pattern t using the partitioning technique of Davies and Baddeley (2018).
+#' The argument bw.t specifies the smoothing bandwidths to be applied to each of the points in X. It should be a numeric vector of bandwidths.
+#' Let the points of \eqn{ti} be \eqn{t_1, ..., t_n} and the corresponding bandwidths \eqn{\sigma_1,...,\sigma_n}, then the adaptive kernel estimate of intensity at a location \eqn{v} is
+#' \deqn{\lambda(v) = \sum_{i=1}^n \frac{K(v,t_i; \sigma_i)}{c(t; \sigma_i)}}
 #' where \eqn{K()} is the Gaussian smoothing kernel.
-#' The method partition the range of bandwidths into ngroups intervals, correspondingly subdividing the points of the pattern \code{ti} into ngroups sub-patterns according to bandwidth, and applying fixed-bandwidth smoothing to each sub-pattern. Specifying \code{ngroups = 1} is the same as fixed-bandwidth smoothing with bandwidth \code{sigma = median(bw)}.
+#' The method partition the range of bandwidths into ngroups.t intervals, correspondingly subdividing the points of the pattern \code{t} into ngroups.t sub-patterns according to bandwidth, and applying fixed-bandwidth smoothing to each sub-pattern. Specifying \code{ngroups.t = 1} is the same as fixed-bandwidth smoothing with bandwidth \code{sigma = median(bw.t)}.
 #'
 #' @return
-#' If \code{at = "points"} (the default), the result is a numeric vector with one entry for each data point in \code{ti}. If \code{at = "bins"} the result is a data.frame containing the \eqn{x,y} coordinates of the intensity function.
+#' If \code{at = "points"} (the default), the result is a numeric vector with one entry for each data point in \code{t}. If \code{at = "bins"} the result is a data.frame containing the \eqn{x,y} coordinates of the intensity function.
 #'
 #' @references
 #' Davies, T.M. and Baddeley, A. (2018) Fast computation of spatially adaptive kernel estimates. Statistics and Computing, 28(4), 937-956.
@@ -27,46 +27,47 @@
 #'
 #' @examples
 #' \dontrun{
-#' ti <- rbeta(100, 1,4,0.8)
-#' dens.par.temp(ti)
+#' t <- rbeta(100, 1,4,0.8)
+#' dens.par.temp(t)
 #' }
 #'
 #' @export
-dens.par.temp <- function(ti, bw = NULL, dimt = 128,
-                       ngroups = NULL,
-                       at = c("points", "bins")){
+dens.par.temp <- function(t, bw.t = NULL,
+                          dimt = 128,
+                          ngroups.t.t = NULL,
+                          at = c("points", "bins")){
   stopifnot(sum(ti < 0) == 0)
   at <- match.arg(at)
-  nT <- length(ti)
-  range.t <- range(ti)
-  if (missing(ngroups) || is.null(ngroups)) {
-    ngroups <- max(1L, floor(sqrt(nT)))
+  nT <- length(t)
+  range.t <- range(t)
+  if (missing(ngroups.t.t) || is.null(ngroups.t.t)) {
+    ngroups.t <- max(1L, floor(sqrt(nT)))
   }
-  else if (any(is.infinite(ngroups))) {
-    ngroups <- nT
+  else if (any(is.infinite(ngroups.t.t))) {
+    ngroups.t <- nT
   }
   else {
-    check.1.integer(ngroups)
-    ngroups <- min(nT, ngroups)
+    check.1.integer(ngroups.t.t)
+    ngroups.t.t <- min(nT, ngroups.t.t)
   }
 
-  if (missing(bw) || is.null(bw)) {
-    bw <- bw.abram.temp(ti)
+  if (missing(bw.t) || is.null(bw.t)) {
+    bw.t <- bw.abram.temp(t)
   }
-  else if (is.numeric(bw)) {
-    check.nvector(bw, nT, oneok = TRUE)
-    if (length(bw) == 1)
-      bw <- rep(bw, nT)
+  else if (is.numeric(bw.t)) {
+    check.nvector(bw.t, nT, oneok = TRUE)
+    if (length(bw.t) == 1)
+      bw.t <- rep(bw.t, nT)
   }
-  else stop("Argument 'bw' should be a single value or a numeric vector")
+  else stop("Argument 'bw.t' should be a single value or a numeric vector")
 
-  p <- seq(0, 1, length = ngroups + 1)
-  qbands <- quantile(bw, p)
-  groupid <- findInterval(bw, qbands, all.inside = T)
+  p <- seq(0, 1, length = ngroups.t + 1)
+  qbands <- quantile(bw.t, p)
+  groupid <- findInterval(bw.t, qbands, all.inside = T)
   pmid <- (p[-1] + p[ -length(p) ]) / 2
-  qmid <- quantile(bw, pmid)
-  group <- factor(groupid, levels = 1:ngroups)
-  Y <- split(ti, group, drop = F)
+  qmid <- quantile(bw.t, pmid)
+  group <- factor(groupid, levels = 1:ngroups.t)
+  Y <- split(t, group, drop = F)
   ni <- sapply(Y, length)
 
   ok <- ni > 0
@@ -82,7 +83,7 @@ dens.par.temp <- function(ti, bw = NULL, dimt = 128,
   fz.t <- approxfun(x = zx, y = Ys)
 
   ZZ <- switch(at,
-               points = fz.t(ti),
+               points = fz.t(t),
                bins = data.frame(x = zx, y = Ys))
   return(ZZ)
 }
