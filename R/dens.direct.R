@@ -21,7 +21,7 @@
 #' \dontrun{
 #' X <- rpoispp(400)
 #' t <- rbeta(X$n, 1,4,0.8)
-#' stIntensity <- dens.direct(X,t, at = "bins", dimt = 32)
+#' stIntensity <- dens.direct(X, t, dimt = 32, at = "bins")
 #' plot(as.imlist(stIntensity[13:16]), main = 'Non-separable direct example')
 #' }
 #'
