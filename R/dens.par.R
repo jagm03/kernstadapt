@@ -4,14 +4,13 @@
 #'
 #' @param X A spatial point pattern (an object of class \code{ppp}) with the spatial coordinates of the observations.
 #' @param t A numeric vector of temporal coordinates with equal length to the number of points in \code{X}. This gives the time associated with each spatial point.
+#' @param dimt Temporal bin vector dimension. The default is 128.
+#' @param dimyx Spatial pixel resolution. The default is 128 for each axes.
 #' @param bw.xy Numeric vector of spatial smoothing bandwidths for each point in \code{X}. By default this is computed usign \link[spatstat.core]{bw.abram}.
 #' @param bw.t Numeric vector of temporal smoothing bandwidths for each point in \code{t}. By default this is computed usign \link{bw.abram.temp}.
 #' @param ngroups.xy Number of groups in which the spatial bandwidths should be partitioned. If this number is 1, then a classical non-adaptive estimator will be used for the spatial part with a bandwidth selected as the median of the bw.xy vector.
 #' @param ngroups.t Number of groups in which the temporal bandwidths should be partitioned. If this number is 1, then a classical non-adaptive estimator will be used for the temporal part with a bandwidth selected as the median of the bw.t vector.
-#' @param dimt Temporal bin vector dimension. The default is 128.
-#' @param dimyx Spatial pixel resolution. The default is 128 for each axes.
 #' @param at String specifying whether to estimate the intensity at a mesh (\code{at = "bins"}) or only at the points of \code{X} (\code{at = "points"}).
-#'
 #' @details
 #' This function computes a non-separable spatio-temporal adaptive kernel estimate of the intensity. It starts from a planar point pattern \code{X} and a vector of times \code{t} and partition (cells) the spatial and temporal components to apply a non-separable kernel estimator within each cell.
 #' The arguments \code{bw.xy} and \code{bw.t} specify the smoothing bandwidth vectors to be applied to each of the points in \code{X} and \code{t}. They should be a numeric vectors of bandwidths.
@@ -26,7 +25,7 @@
 #' \dontrun{
 #' X <- rpoispp(1400)
 #' t <- rbeta(X$n, 1,4,0.8)
-#' stIntensity <- dens.st.bin(X,t, at = "bins")
+#' stIntensity <- dens.par(X,t, at = "bins")
 #' plot(as.imlist(stIntensity[13:16]), main = 'Non-separable Example')
 #' }
 #'
@@ -35,11 +34,11 @@
 #' @importFrom spatstat.geom setmarks marks
 #' @importFrom spatstat.random rpoispp
 #' @export
-dens.st.bin <- function(X, t = NULL,
-                        bw.xy = NULL, bw.t = NULL, #bandwidths
-                        ngroups.xy = NULL, ngroups.t = NULL, #groups
-                        dimt = 128, dimyx = 128, #resolution
-                        at = c("bins", "points") #at
+dens.par <- function(X, t = NULL, #point patterns
+                     dimt = 128, dimyx = 128, #resolution
+                     bw.xy = NULL, bw.t = NULL, #bandwidths
+                     ngroups.xy = NULL, ngroups.t = NULL, #groups
+                     at = c("bins", "points") #at
 ){
   verifyclass(X, "ppp")
   n <- npoints(X)
