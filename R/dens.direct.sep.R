@@ -24,12 +24,12 @@
 #' \dontrun{
 #' X <- rpoispp(1400)
 #' t <- rbeta(X$n, 1,4,0.8)
-#' stIntensity <- dens.sep.direct(X, t, at = "bins")
+#' stIntensity <- dens.direct.sep(X, t, at = "bins")
 #' plot(as.imlist(stIntensity[13:16]), main = 'Direct separable example')
 #' }
 #'
 #' @export
-dens.sep.direct<- function(X, t = NULL,
+dens.direct.sep<- function(X, t = NULL,
                            dimt = 128, dimyx = 128, #resolution
                            bw.xy = NULL, bw.t = NULL, #bandwidths
                            at = c("bins", "points") #at
