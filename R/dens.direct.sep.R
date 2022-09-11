@@ -29,7 +29,7 @@
 #' }
 #'
 #' @export
-dens.direct.sep<- function(X, t = NULL,
+dens.direct.sep <- function(X, t = NULL,
                            dimt = 128, dimyx = 128, #resolution
                            bw.xy = NULL, bw.t = NULL, #bandwidths
                            at = c("bins", "points") #at
@@ -39,6 +39,7 @@ dens.direct.sep<- function(X, t = NULL,
   n <- npoints(X)
   if(is.null(t)) t <- marks(X)
   t <- checkt(t)
+  nT <- length(t)
   if(length(t) != n)
     stop(paste("Length of temporal vector does not match number of spatial observations\n   npoints(X) = ",n,"; length(t) = ",length(t), sep = ""))
   at <- match.arg(at)
