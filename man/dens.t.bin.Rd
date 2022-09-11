@@ -4,16 +4,16 @@
 \alias{dens.t.bin}
 \title{Adaptive kernel estimate of intensity of a temporal point pattern}
 \usage{
-dens.t.bin(ti, bw = NULL, ngroups = NULL, dimt = 128, at = c("points", "bins"))
+dens.t.bin(ti, bw = NULL, dimt = 128, ngroups = NULL, at = c("points", "bins"))
 }
 \arguments{
 \item{ti}{Temporal point pattern, a vector with observations.}
 
 \item{bw}{Numeric vector of smoothing bandwidths for each point in ti. The default is to compute bandwidths using \link{bw.abram.temp}.}
 
-\item{ngroups}{Number of groups into which the bandwidths should be partitioned and discretised. The default is the square root (rounded) of the number of points of \code{ti}.}
-
 \item{dimt}{Bin vector dimension. The default is 128.}
+
+\item{ngroups}{Number of groups into which the bandwidths should be partitioned and discretised. The default is the square root (rounded) of the number of points of \code{ti}.}
 
 \item{at}{String specifying whether to estimate the intensity at bins points (\code{at = "bins"}) or only at the points of ti (\code{at = "points"}).}
 }
