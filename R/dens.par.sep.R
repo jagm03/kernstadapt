@@ -26,18 +26,18 @@
 #' \dontrun{
 #' X <- rpoispp(1400)
 #' t <- rbeta(X$n, 1,4,0.8)
-#' stIntensity <- dens.st.sep.bin(X,t, at = "bins")
+#' stIntensity <- dens.par.sep(X,t, at = "bins")
 #' plot(as.imlist(stIntensity[13:16]), main = 'Separable Example')
 #' }
 #'
 #' @importFrom spatstat.core densityAdaptiveKernel.ppp
 #' @importFrom spatstat.geom eval.im
 #' @export
-dens.st.sep.bin <- function(X, t = NULL,
-                            bw.xy = NULL, bw.t = NULL, #bandwidths
-                            ngroups.xy = NULL, ngroups.t = NULL, #groups
-                            dimt = 128, dimyx = 128, #resolution
-                            at = c("bins", "points") #at
+dens.par.sep <- function(X, t = NULL,
+                         dimt = 128, dimyx = 128, #resolution
+                         bw.xy = NULL, bw.t = NULL, #bandwidths
+                         ngroups.xy = NULL, ngroups.t = NULL, #groups
+                         at = c("bins", "points") #at
 )
 {
   verifyclass(X, "ppp")
