@@ -63,9 +63,9 @@ dens.par.sep <- function(X, t = NULL,
       bw.t <- rep(bw.t, nT)
   }
 
-  Mtemporal <- dens.t.bin(ti = t, bw = bw.t,
-                          ngroups = ngroups.t,
-                          dimt = dimt, at = at)
+  Mtemporal <- dens.par.temp(t = t, bw.t = bw.t,
+                             ngroups = ngroups.t,
+                             dimt = dimt, at = at)
   Mspatial <- densityAdaptiveKernel.ppp(unmark(X), bw = bw.xy, at = at.s,
                                         dimyx = dimyx, edge = T,
                                         ngroups = ngroups.xy)
