@@ -11,7 +11,7 @@
 #'@importFrom stats bw.nrd0 density.default approxfun
 #'@importFrom spatstat.utils check.1.real
 #'@export
-bw.abram.temp <- function (t, h0 = NULL, trim = 5, nt = 128, at = "points")
+bw.abram.temp <- function (t, h0 = NULL, nt = 128, trim = 5, at = "points")
 {
   t <- checkt(t)
   stopifnot(sum(t < 0) == 0)
