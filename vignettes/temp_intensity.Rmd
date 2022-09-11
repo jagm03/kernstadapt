@@ -88,7 +88,7 @@ ggplot(data = PD, aes(x = x, y = intensity, group = estimator, colour = estimato
 ```{r, ,fig.height = 5, fig.width= 7, fig.align="center"}
 # Load aegiss data-set and plotting
 data(aegiss)
-plot(aegiss, bg = terrain.colors(20), pch = 21, cex = 1, 
+plot(aegiss, bg = rainbow(512), pch = 21, cex = 1, 
      main = "Gastrointestinal desease cases in Hampshire")
 ```
 
@@ -100,7 +100,7 @@ Nt <- aegiss$n
 classic.dens <- density.default(ti, from = min(ti), to = max(ti))
 classic.dens$y <- classic.dens$y * Nt
 # Adaptive estimate
-adapt.dens <- dens.t.bin(ti, at = "bins", dimt = 512)
+adapt.dens <- dens.par.temp(ti, at = "bins", dimt = 512)
 
 aegissD <- data.frame(x = rep(adapt.dens$x, 2),
                  intensity = c(classic.dens$y, adapt.dens$y),
