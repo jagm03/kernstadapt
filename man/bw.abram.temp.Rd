@@ -4,16 +4,16 @@
 \alias{bw.abram.temp}
 \title{Computes adaptive smoothing bandwidth in the temporal case according to the inverse-square-root rule of Abramson (1982).}
 \usage{
-bw.abram.temp(ti, h0 = NULL, trim = 5, nt = 128, at = "points")
+bw.abram.temp(t, h0 = NULL, nt = 128, trim = 5, at = "points")
 }
 \arguments{
-\item{ti}{A vector (a temporal point pattern) for which the bandwidths should be computed.}
+\item{t}{A vector (a temporal point pattern) for which the bandwidths should be computed.}
 
 \item{h0}{The global smoothing bandwidth. The default is Silverman's rule of thumb (bw.nrd0).}
 
-\item{trim}{A trimming value to cut extreme large bandwidths.}
-
 \item{nt}{The number of equally spaced points at which the temporal density is to be estimated.}
+
+\item{trim}{A trimming value to cut extreme large bandwidths.}
 
 \item{at}{Character string specifying whether to compute bandwidths at the points (at = "points", the default) or to compute bandwidths at every bin in a bin grid (at = "bins").}
 }
