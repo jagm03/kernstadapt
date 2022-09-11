@@ -4,10 +4,10 @@
 #'
 #' @param X A spatial point pattern (an object of class \code{ppp}) with the spatial coordinates of the observations
 #' @param t A numeric vector of temporal coordinates with equal length to the number of points in \code{X}. This gives the time associated with each spatial point.
-#' @param bw.xy Numeric vector of spatial smoothing bandwidths for each point in \code{X}. By default this is computed usign \link[spatstat.core]{bw.abram}, with \code{h0} given by \link[sparr]{OS}.
-#' @param bw.t Numeric vector of temporal smoothing bandwidths for each point in \code{t}. By default this is computed usign \link{bw.abram.temp}.
 #' @param dimt Temporal bin vector dimension. The default is 128.
 #' @param dimyx Spatial pixel resolution. The default is 128 for each axes.
+#' @param bw.xy Numeric vector of spatial smoothing bandwidths for each point in \code{X}. By default this is computed usign \link[spatstat.core]{bw.abram}, with \code{h0} given by \link[sparr]{OS}.
+#' @param bw.t Numeric vector of temporal smoothing bandwidths for each point in \code{t}. By default this is computed usign \link{bw.abram.temp}.
 #' @param at String specifying whether to estimate the intensity at a mesh (\code{at = "bins"}) or only at the points of \code{X} (\code{at = "points"}).
 #'
 #' @details
