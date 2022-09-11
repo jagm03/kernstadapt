@@ -30,9 +30,9 @@
 #'
 #' @export
 dens.direct.sep <- function(X, t = NULL,
-                           dimt = 128, dimyx = 128, #resolution
-                           bw.xy = NULL, bw.t = NULL, #bandwidths
-                           at = c("bins", "points") #at
+                            dimyx = 128, dimt = 128, #resolution
+                            bw.xy = NULL, bw.t = NULL, #bandwidths
+                            at = c("bins", "points") #at
 )
 {
   verifyclass(X, "ppp")

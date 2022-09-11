@@ -32,8 +32,9 @@
 #' }
 #'
 #' @export
-dens.par.temp <- function(t, bw.t = NULL,
+dens.par.temp <- function(t,
                           dimt = 128,
+                          bw.t = NULL,
                           ngroups.t = NULL,
                           at = c("points", "bins")){
   stopifnot(sum(t < 0) == 0)
