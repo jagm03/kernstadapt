@@ -75,9 +75,9 @@ bwt <- bw.abram.temp(t = XX$marks, h0 = bwt0)
 First we use a fixed-bandwidth kernel estimate for the intensity using a function provided by the **sparr** package.
 ```{r}
 # Fixed bandwidth estimate (non-separable)
-classic.dens <- spattemp.density(pp = unmark(XX), h = bwS0, tt = XX$marks,
+classic.dens <- spattemp.density(pp = unmark(XX), tt = XX$marks,
                                  sres = 128, tres = 64,
-                                 lambda = bwt0,
+                                 lambda = bwt0, h = bwS0,
                                  sedge = "uniform")
 ```
 Now we compute the adaptive intensity by using our partitioning algorithm. For doing that, we have to set first a fixed number of groups for the spatial and the temporal bandwidths; it could be done manually or let the function decide based on a rule-of-thumb. In addition, we set a temporal resolution of 64 pixels (the default is 128 for space and for time). We can evaluate the intensity at the data points (at = "points"), or obtain snapshots (at = "bins", the default).
