@@ -7,8 +7,8 @@
 dens.par(
   X,
   t = NULL,
-  dimt = 128,
   dimyx = 128,
+  dimt = 128,
   bw.xy = NULL,
   bw.t = NULL,
   ngroups.xy = NULL,
@@ -21,9 +21,9 @@ dens.par(
 
 \item{t}{A numeric vector of temporal coordinates with equal length to the number of points in \code{X}. This gives the time associated with each spatial point.}
 
-\item{dimt}{Temporal bin vector dimension. The default is 128.}
-
 \item{dimyx}{Spatial pixel resolution. The default is 128 for each axes.}
+
+\item{dimt}{Temporal bin vector dimension. The default is 128.}
 
 \item{bw.xy}{Numeric vector of spatial smoothing bandwidths for each point in \code{X}. By default this is computed usign \link[spatstat.core]{bw.abram}.}
 

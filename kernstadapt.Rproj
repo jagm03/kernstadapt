@@ -18,5 +18,5 @@ LineEndingConversion: Posix
 
 BuildType: Package
 PackageUseDevtools: Yes
-PackageBuildArgs: --no-multiarch --with-keep.source --resave-data
+PackageBuildArgs: --resave-data
 PackageRoxygenize: rd,collate,namespace
