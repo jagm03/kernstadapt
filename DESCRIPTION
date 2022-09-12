@@ -3,9 +3,10 @@ Title: Spatio-temporal adaptive kernel estimators for intensities
 Version: 0.0.1.0
 Authors@R: 
     person("Jonatan", "González", , "jonathan.gonzalez@kaust.edu.sa", 
-            role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0002-2296-5271"))
-Description: The "kernstadapt-package" for R allows for estimating adaptive kernel-smoothed spatio-temporal intensity functions..
+            role = c("aut", "cre"), comment = c(ORCID = "0000-0002-2296-5271")),
+    person("Paula", "Moraga", , "paula.moraga@kaust.edu.sa", 
+            role = c("aut"), comment = c(ORCID = "0000-0001-5266-0201"))        
+Description: The "kernstadapt" is an R package for adaptive kernel estimation of the intensity of spatio-temporal point processes.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

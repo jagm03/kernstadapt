@@ -2,8 +2,8 @@
 #'
 #'@param t A vector (a temporal point pattern) for which the bandwidths should be computed.
 #'@param h0 The global smoothing bandwidth. The default is Silverman's rule of thumb (bw.nrd0).
-#'@param trim A trimming value to cut extreme large bandwidths.
 #'@param nt The number of equally spaced points at which the temporal density is to be estimated.
+#'@param trim A trimming value to cut extreme large bandwidths.
 #'@param at Character string specifying whether to compute bandwidths at the points (at = "points", the default) or to compute bandwidths at every bin in a bin grid (at = "bins").
 #'@examples
 #'X <- rbeta(100, 1.5, 5.5, 0.2) * 2 #Simulated temporal point pattern
