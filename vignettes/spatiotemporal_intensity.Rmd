@@ -2,32 +2,97 @@
 title: "Adaptive estimation of spatio-temporal intensities using **kernstadapt**"
 output: rmarkdown::pdf_document
 geometry: margin = 2cm
+fontsize: 11pt
 vignette: >
-  %\VignetteIndexEntry{st_intensity}
+  %\VignetteIndexEntry{spatiotemporal_intenstiy}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, echo=FALSE, warning=FALSE, message=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, message=FALSE}
+# Main package
 library(kernstadapt)
+
+# Complementary packages
 library(spatstat)
 library(sparr)
 ```
 
+
+# Introduction
+
+**kernstadapt** is an R package for the spatio-temporal estimation of the intensities of spatio-temporal point processes. The package uses an adaptive approach where the kernel bandwidth varies with each data point to estimate the expected number of points in an observation window and a time interval. **kernstadapt** provides tools for separability testing, adaptive bandwidth computation, and fast calculation of the intensity using a bandwidth partitioning algorithm.
+
+
+## Intensity function
+
+The intensity function of a spatio-temporal point process gives the expected number of points per unit area in a given spatial region $W$ when the observations depend on time. That is, the intensity functions denotes the expected number of the process events at $\mathbf{u}\in W$ and $v \in T$:
+
+$$
+\lambda(\mathbf{u},v)=\lim\limits_{|d \mathbf{u} \times d v| \rightarrow 0}\frac{\mathbb{E} \left[ N(d \mathbf{u}\times d v) \right ]}{d \mathbf{u} d v},
+$$
+where $d{\mathbf{u}}$ and $d v$ define small spatial ante temporal regions around the locations $\mathbf{u}$ and $v$; where $|\cdot|$ denotes area, and $N(\cdot)$ denotes the number of events of a given set.
+
+ 
+## Separable estimation of the intensity
+
+A spatio-temporal point process is defined as *first-order separable*, when the intensity function can be factorised as a product of two spatial and temporal parts:
+
+$$
+\lambda(\mathbf{u},v) = \lambda_1(\mathbf{u}) \lambda_2(v),
+$$
+where 
+$\lambda_1(\cdot)$ and $\lambda_2(\cdot)$ are non-negative functions.
+
+## Spatio-temporal adaptative estimator
+
+The spatio-temporal adaptive kernel estimator is defined as follows.
+
+$$
+		\hat{\lambda}_{\epsilon, \delta}\left(\mathbf{u},v \right) =\frac{1}{e_{\epsilon,\delta} \left(\mathbf{u},v\right) }\sum_{i=1}^{n}{K^{\text{s}}_{\epsilon(\mathbf{u}_i)}\left(\mathbf{u}-\mathbf{u}_{i}\right)  K^{\text{t}}_{\delta(v_i)}\left(v-v_{i}\right) },\qquad (\mathbf{u}, v) \in W\times T,
+$$
+where the edge correction is given by
+
+$$
+e_{\epsilon,\delta} \left(\mathbf{u},v\right)  = \int_{W}\int_{T}K^{\text{s}}_{\epsilon(\mathbf{u'})}\left(\mathbf{u}-\mathbf{u'}\right)  K^{\text{t}}_{\delta(v')}\left(v-v'\right) d \mathbf{u'} d v'.
+$$
+In above equations, $K^{\text{s}}_{\epsilon(\mathbf{u}_i)}(\cdot)$ and $K^{\text{t}}_{\delta(v_i)}(\cdot)$ are spatial and temporal Gaussian kernels for space and time with bandwidths given by $\epsilon(\mathbf{u}_i)$ and $\delta(v_i) >0$. In this case, since the bandwidths are functions of the data points, these functions must be adequately defined and estimated.
+
+## Fast estimation through partitioning algorithm
+
+The partitioning algorithm performs the computation of the adaptive estimator by summing fixed-bandwidth estimates operating on appropriate subsets of the data points.
+The subsets of data points for the partitioning algorithm are defined by binning the variable bandwidths.
+The bins generate a partition of the point pattern $X$ into $C_1\times C_2$ subpatterns $Y_{ij}$ and
+$X=\bigcup_{ij} Y_{ij}.$ Then, we can compute the intensity as 
+$$
+\hat{\lambda}_{\epsilon,\delta}\left(\mathbf{u}, v \right) \approx \sum_{i =1}^{C_1} \sum_{j=1}^{C_2} \hat{\lambda}^{*}_{\bar{\epsilon}_i,\bar{\delta}_j}\left(\mathbf{u},v | Y_{ij} \right),
+$$
+where $\bar{\epsilon}_i$ and $\bar{\delta}_j$ are the midpoints of the $i$th spatial and $j$th temporal bins and $\hat{\lambda}^{*}_{\bar{\epsilon}_i,\bar{\delta}_j}\left(\mathbf{u},v | Y_{ij} \right)$ is a fixed-bandwidth intensity estimate of $Y_{ij}$.
+
+
+
 # Data
+
 **kernstadapt** has three datasets included to serve as working examples of the package capabilities.
 
 ### Aegiss
+
 This dataset is a spatio-temporal point pattern where the points stand for non-specific gastrointestinal infections in Hampshire, UK. The time covers from 2001 to 2003.
 
 ### Santander's earthquakes
-This dataset is a spatio-temporal point pattern where the points are earthquakes in Santander-Colombia from 2000 to 2020.
+
+This dataset is a spatio-temporal point pattern where the points are earthquakes in Santander, Colombia, from 2000 to 2020.
 
 ### Amazon fires
+
 This dataset is a spatio-temporal point pattern where the points are locations of active deforestation fires (starting within past 24 hours) from 01/01/2021 to 10/10/2021 (284 days).
 
-```{r, fig.height = 3.5, fig.align="center", fig.width=9}
+
+```{r, fig.height = 3, fig.align="center", fig.width=9}
 data(aegiss, santander, amazon)
 par(mfrow = c(1,3))
 
@@ -39,44 +104,44 @@ plot(amazon[sample.int(amazon$n, 5000)], main = "Amazon fires", bg = rainbow(250
 # Variable bandwidth 
 
 In the adaptive kernel estimation, each data point is equipped with a bandwidth value following the spatial and temporal functions given by
+
 $$
 \epsilon(\mathbf{u})=\frac{\epsilon^{\star}}{\gamma^{\text{s}}} \sqrt{\frac{n}{\lambda^{\text{s}}(\mathbf{u})}}, \quad \text{and} \quad
 \delta(v)=\frac{\delta^{\star}}{\gamma^{\text{t}}} \sqrt{\frac{n}{\lambda^{\text{t}}(v)}}, $$
 where $\epsilon^{\star}$ and $\delta^{\star}$ are *global bandwidths*, $\lambda^{\text{s}}(\mathbf{u})$ and $\lambda^{\text{t}}(v)$ are marginal intensity functions in space and time, $\gamma^{\text{s}}$ and $\gamma^{\text{t}}$ are the geometric means of the marginal intensities.
 
-In this viggnette, we assign some global bandwidths using several methods, but the user may let **kernstadapt** choose its defaults.
+Here, we assign some global bandwidths using several methods, but the user may let **kernstadapt** choose its defaults.
 
 ```{r}
 # Cronie and van Lieshout's spatial bandwidth
 bw.xy.aegiss <- bw.abram(aegiss, h0 = bw.CvL(santander)) 
+
 # Modified Silverman's rule of thumb temporal bandwidth
 bw.t.aegiss <- bw.abram.temp(aegiss$marks, h0 = bw.nrd(aegiss$marks))
 
 # Scott’s isotropic rule of thumb for spatial bandwidth
 bw.xy.santander <- bw.abram(santander, h0 = bw.scott.iso(santander))
+
 # Unbiased cross-validation for temporal bandwidth
 bw.t.santander <- bw.abram.temp(santander$marks,
                                 h0 = bw.ucv(as.numeric(santander$marks)))
 ```
 
-# Separable estimation of the intensity
+# Separability test
 
-A spatio-temporal point process is defined as *first-order separable*, when the intensity function can be factorised as a product of two spatial and temporal parts:
-$$
-\lambda(\mathbf{u},v) = \lambda_1(\mathbf{u}) \lambda_2(v),
-$$
-where 
-$\lambda_1(\cdot)$ and $\lambda_2(\cdot)$ are non-negative functions.
-
-## Separability test
 In order to test separability in a spatio-temporal point process, **kernstadapt** uses a simple statistical test based on spatio-temporal quadrat counts.
 
 ```{r}
 sapply(list(aegiss, santander, amazon), separability.test)
 ```
+
 Theferore, we conclude that only santander dataset can be assumed as separable.
 
+
+# Separable estimation of the intensity
+
 ## Estimator
+
 In the separable case, the estimator is given by
 $$
 \hat{\lambda}_{\epsilon, \delta}\left(\mathbf{u} ,v\right) =\frac{1}{n}\left( \frac{1}{e_{\epsilon} \left(\mathbf{u}\right) } \sum_{i=1}^{n}{K^{\text{s}}_{\epsilon(\mathbf{u}_i)}\left(\mathbf{u}-\mathbf{u}_{i}\right)}\right) \left(\frac{1}{e_{\delta} \left(v\right)} \sum_{i=1}^{n} K^{\text{t}}_{\delta(v_i)}\left(v-v_{i}\right) \right),\qquad (\mathbf{u}, v) \in W\times T,
@@ -85,19 +150,45 @@ where $K^{\text{s}}_{\epsilon}(\cdot)$ and $K^{\text{t}}_{\delta}(\cdot)$ are bi
 
 **kernstadapt** can estimate the intensity directly by applying the above formula or approximating it using a fast partition method. We apply both methods to Santander's data, the separable one.
 
+
+## Direct estimator
+
 ```{r}
 # Direct estimation, separable case
-lambda.sep.direct.santander <- dens.direct.sep(X = santander, 
-                                               dimyx = 128, dimt = 64,
-                                               bw.xy = bw.xy.santander, 
-                                               bw.t = bw.t.santander)
+lambda <- dens.direct.sep(X = santander, 
+                          dimyx = 128, dimt = 64,
+                          bw.xy = bw.xy.santander, 
+                          bw.t = bw.t.santander)
+```
 
+
+Now, we plot some snapshots of the spatio-temporal estimated intensity.
+
+```{r, fig.align="center", fig.height = 5, fig.width=9}
+# We select some fixed times for visualisation
+I <- c(12, 18, 23, 64)
+
+# We subset the lists
+SDS <- lapply(lambda[I], function(x) (abs(x)) ^ (1/6))
+
+# Transform to spatial-objects-lists
+SDS <- as.solist(SDS)
+
+# We generate the plots
+plot(SDS, ncols = 4, equal.ribbon = T, box = F,
+     main = 'Direct estimation, separable case')
+```
+
+
+## Partition algorithm estimator
+
+```{r}
 # Partition algorithm estimation, separable case
-lambda.sep.par.santander <- dens.par.sep(X = santander, 
-                                         dimyx = 128, dimt = 64,
-                                         bw.xy = bw.xy.santander, 
-                                         bw.t = bw.t.santander,
-                                         ngroups.xy = 20, ngroups.t = 10)
+lambda <- dens.par.sep(X = santander, 
+                       dimyx = 128, dimt = 64,
+                       bw.xy = bw.xy.santander, 
+                       bw.t = bw.t.santander,
+                       ngroups.xy = 20, ngroups.t = 10)
 ```
 
 Now, we plot some snapshots of the spatio-temporal estimated intensity.
@@ -107,25 +198,22 @@ Now, we plot some snapshots of the spatio-temporal estimated intensity.
 I <- c(12, 18, 23, 64)
 
 # We subset the lists
-SDS <- lapply(lambda.sep.direct.santander[I], function(x) (abs(x)) ^ (1/6))
-SPS <- lapply(lambda.sep.par.santander[I], function(x) (abs(x)) ^ (1/6))
+SPS <- lapply(lambda[I], function(x) (abs(x)) ^ (1/6))
 
 # Transform to spatial-objects-lists
-SDS <- as.solist(SDS)
 SPS <- as.solist(SPS)
 
 # We generate the plots
-plot(SDS, ncols = 4, equal.ribbon = T, box = F,
-     main = 'Direct estimation, separable case')
 plot(SPS, ncols = 4, equal.ribbon = T, box = F, 
      main = 'Partition algorithm estimation, separable case')
 ```
 
-
 # Non-separable estimation of the intensity
 
 ## Estimator
+
 In the non-separable case, an adaptive estimator for the intensity is
+
 $$
 \hat{\lambda}_{\epsilon, \delta}\left(\mathbf{u},v \right) =\frac{1}{e_{\epsilon,\delta} \left(\mathbf{u},v\right)} \sum_{i=1}^{n}{K^{\text{s}}_{\epsilon(\mathbf{u}_i)}\left(\mathbf{u}-\mathbf{u}_{i}\right)  K^{\text{t}}_{\delta(v_i)}\left(v-v_{i}\right) },\qquad (\mathbf{u}, v) \in W\times T,
 $$
@@ -135,13 +223,18 @@ e_{\epsilon,\delta} \left(\mathbf{u},v\right)  = \int_{W}\int_{T}K^{\text{s}}_{\
 $$
 
 The **kernstadapt** package has the functionality of applying the direct estimator given above.
+It also has a fast partition method for estimating the intensity in a non-separable way.
+
+
+## Direct estimator
+
 ```{r}
 #Direct estimation, non-separable case
-lambda.nsep.direct.aegiss <- dens.direct(aegiss, 
-                                         dimyx = 32, dimt = 16,
-                                         bw.xy = bw.xy.aegiss, 
-                                         bw.t = bw.t.aegiss,
-                                         at = "bins")
+lambda <- dens.direct(aegiss, 
+                      dimyx = 32, dimt = 16,
+                      bw.xy = bw.xy.aegiss, 
+                      bw.t = bw.t.aegiss,
+                      at = "bins")
 ```
 
 We have used very coarse spatial and temporal grids; as the direct estimator needs lots of computational resources. 
@@ -153,7 +246,7 @@ Now, we plot some snapshots of the spatio-temporal estimated intensity.
 I <- c(2, 5, 8, 16)
 
 # We subset the lists
-NSDA <- lapply(lambda.nsep.direct.aegiss[I], function(x) (abs(x)) ^ (1/6))
+NSDA <- lapply(lambda[I], function(x) (abs(x)) ^ (1/6))
 
 # Transform to spatial-objects-lists
 NSDA <- as.solist(NSDA)
@@ -165,13 +258,14 @@ plot(NSDA, ncols = 4, equal.ribbon = T, box = F,
 
 ## Partition algorithm estimator
 
-**kernstadapt** has a fast way for estimating the intensity in a non-separable way, it employs a fast partition method. We apply this method to Amazon data, the most complex dataset of the package. In this case we let the package decide about global bandwidths.
+We apply the partition algorithm method and let the package decide about global bandwidths.
+
 
 ```{r}
 # Partition algorithm estimation, non-separable case
-lambda.nsep.par.amazon <- dens.par.sep(X = amazon, 
-                                       dimyx = 128, dimt = 64,
-                                       ngroups.xy = 20, ngroups.t = 10)
+lambda <- dens.par.sep(X = amazon, 
+                       dimyx = 128, dimt = 64,
+                       ngroups.xy = 20, ngroups.t = 10)
 ```
 
 Now, the visualisation of the spatio-temporal estimated intensity.
@@ -181,7 +275,7 @@ Now, the visualisation of the spatio-temporal estimated intensity.
 I <- c(12, 18, 23, 64)
 
 # We subset the lists
-NSPA <- lapply(lambda.nsep.par.amazon[I], function(x) (abs(x)) ^ (1/6))
+NSPA <- lapply(lambda[I], function(x) (abs(x)) ^ (1/6))
 
 # Transform to spatial-objects-lists
 NSPA <- as.solist(NSPA)
