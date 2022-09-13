@@ -27,7 +27,6 @@ library(kernstadapt)
 
 ## Main functions
 
-
 Direct estimation of the intensity
 
 - `dens.direct()` (non-separable)
