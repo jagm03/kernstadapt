@@ -16,7 +16,7 @@ A spatio-temporal point pattern of locations and times of earthquake epicentres 
     \code{y} \tab Cartesian \eqn{y}-coordinate of infection \cr
     \code{marks} \tab {An integer vector of values indicating the time
     of the earthquake starting in \code{1}} \cr
-    \code{window} \tab Cartesian cordinates of Santander's map
+    \code{window} \tab Cartesian coordinates of Santander's map
     }
   See \code{\link[spatstat.geom]{ppp.object}} for details of the format.
 }

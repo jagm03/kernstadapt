@@ -16,7 +16,7 @@ A spatio-temporal point pattern of locations and times of individuals with non-s
     \code{y} \tab Cartesian \eqn{y}-coordinate of infection \cr
     \code{marks} \tab An integer vector of values indicating \cr
                       the time of infection starting in \code{1}
-    \code{window} \tab Cartesian cordinates of Hampshire's map
+    \code{window} \tab Cartesian coordinates of Hampshire's map
     }
   See \code{\link[spatstat.geom]{ppp.object}} for details of the format.
 }
