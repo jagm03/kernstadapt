@@ -18,5 +18,4 @@ LineEndingConversion: Posix
 
 BuildType: Package
 PackageUseDevtools: Yes
-PackageBuildArgs: --resave-data
 PackageRoxygenize: rd,collate,namespace
