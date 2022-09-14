@@ -2,7 +2,6 @@
 
 **kernstadapt** is an R package for adaptive kernel estimation of the intensity of spatio-temporal point processes.
 
-
 **kernstadapt** implements functionalities to estimate the intensity of a spatio-temporal point pattern by kernel smoothing with adaptive bandwidth methodology when each data point has its own bandwidth associated as a function of the crowdedness of the region (in space and time) in which the point is observed.
 
 The package presents the intensity estimation through a direct estimator and the partitioning algorithm methodology presented in [González and Moraga
@@ -27,7 +26,7 @@ library(kernstadapt)
 
 ## Main functions
 
-Direct estimation of the intensity
+Direct adaptive estimation of the intensity
 
 - `dens.direct()` (non-separable)
 - `dens.direct.sep()` (separable)
@@ -40,7 +39,6 @@ Adaptive intensity estimation using a partition algorithm
 
 Bandwidths calculation
 
-- `bw.abram()` (spatial)
 - `bw.abram.temp()` (temporal)
 
 Separability test
