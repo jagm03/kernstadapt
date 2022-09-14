@@ -49,7 +49,7 @@ ggplot(data = PD, aes(x = x, y = intensity, group = estimator, colour = estimato
   geom_path() + theme(axis.title.x = element_blank())
 ```
 
-# Second example: Temporal poin pattern with three black holes
+# Second example: Temporal point pattern with three black holes
 
 ```{r,fig.height = 3.5, fig.width= 7, fig.align="center"}
 # Setting a simulation of a high clustered temporal point pattern

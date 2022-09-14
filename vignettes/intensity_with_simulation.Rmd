@@ -116,7 +116,7 @@ We want to estimate the intensity of the Amazonia fires.
 data("amazon")
 ```
 
-Now, given that the number of points is huge, for visualisation we selec just a sample of 5000.
+Now, given that the number of points is huge, for visualisation we select a sample of 5000.
 ```{r, fig.height = 4.5, fig.align="center"}
 # Extract a sample of 5000 data points
 AmazonReduced <- amazon[sample.int(amazon$n, 5000)]
@@ -191,7 +191,7 @@ plot.imlist(CN, ncols = 5, main = 'Classic fixed-bandwidth estimate')
 plot.imlist(AN, ncols = 5, main = 'Adaptive non-separable estimate')
 ```
 
-## Dinamic intensity estimate 
+## Dynamic intensity estimate 
 
 ```{r, eval = FALSE}
 animation::saveVideo(

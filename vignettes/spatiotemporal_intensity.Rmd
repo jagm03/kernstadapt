@@ -139,7 +139,7 @@ In order to test separability in a spatio-temporal point process, **kernstadapt*
 sapply(list(aegiss, santander, amazon), separability.test)
 ```
 
-Theferore, we conclude that only santander dataset can be assumed as separable.
+Therefore, we conclude that only Santander dataset can be assumed as separable.
 
 
 # Separable estimation of the intensity
