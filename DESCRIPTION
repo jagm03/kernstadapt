@@ -7,6 +7,7 @@ Authors@R: c(
     person("Paula", "Moraga", , "paula.moraga@kaust.edu.sa", 
             role = c("aut"), comment = c(ORCID = "0000-0001-5266-0201"))   
             )
+Maintainer: Jonatan Gonzalez <jonathan.gonzalez@kaust.edu.sa>
 Description: "kernstadapt" is an R package for adaptive kernel estimation of the intensity of spatio-temporal point processes. The methodology used for estimation is presented in González and Moraga (2022). <https://arxiv.org/pdf/2208.12026.pdf>.
 License: MIT + file LICENSE
 Encoding: UTF-8
