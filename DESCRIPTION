@@ -1,5 +1,5 @@
 Package: kernstadapt
-Title: Spatio-temporal adaptive kernel estimators for intensities
+Title: Spatio-Temporal Adaptive Kernel Estimators for Intensities
 Version: 0.0.1.0
 Authors@R: c(
     person("Jonatan A", "González", , "jonathan.gonzalez@kaust.edu.sa", 
@@ -8,7 +8,7 @@ Authors@R: c(
             role = c("aut"), comment = c(ORCID = "0000-0001-5266-0201"))   
             )
 Maintainer: Jonatan A González <jonathan.gonzalez@kaust.edu.sa>
-Description: "kernstadapt" is an R package for adaptive kernel estimation of the intensity of spatio-temporal point processes. The methodology used for estimation is presented in González and Moraga (2022). <https://arxiv.org/pdf/2208.12026.pdf>.
+Description: This R package performs adaptive kernel estimations of the intensity of spatio-temporal point processes. The methodology used for estimation is presented in González and Moraga (2022). <arXiv:2208.12026>.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
