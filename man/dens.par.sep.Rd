@@ -25,9 +25,9 @@ dens.par.sep(
 
 \item{dimt}{Temporal bin vector dimension. The default is 128.}
 
-\item{bw.xy}{Numeric vector of spatial smoothing bandwidths for each point in \code{X}. By default this is computed usign \link[spatstat.core]{bw.abram}.}
+\item{bw.xy}{Numeric vector of spatial smoothing bandwidths for each point in \code{X}. By default this is computed using \link[spatstat.core]{bw.abram}.}
 
-\item{bw.t}{Numeric vector of temporal smoothing bandwidths for each point in \code{t}. By default this is computed usign \link{bw.abram.temp}.}
+\item{bw.t}{Numeric vector of temporal smoothing bandwidths for each point in \code{t}. By default this is computed using \link{bw.abram.temp}.}
 
 \item{ngroups.xy}{Number of groups in which the spatial bandwidths should be partitioned. If this number is 1, then a classical non-adaptive estimator will be used for the spatial part with a bandwidth selected as the median of the bw.xy vector.}
 

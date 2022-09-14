@@ -23,9 +23,9 @@ dens.direct.sep(
 
 \item{dimt}{Temporal bin vector dimension. The default is 128.}
 
-\item{bw.xy}{Numeric vector of spatial smoothing bandwidths for each point in \code{X}. By default this is computed usign \link[spatstat.core]{bw.abram}.}
+\item{bw.xy}{Numeric vector of spatial smoothing bandwidths for each point in \code{X}. By default this is computed using \link[spatstat.core]{bw.abram}.}
 
-\item{bw.t}{Numeric vector of temporal smoothing bandwidths for each point in \code{t}. By default this is computed usign \link{bw.abram.temp}.}
+\item{bw.t}{Numeric vector of temporal smoothing bandwidths for each point in \code{t}. By default this is computed using \link{bw.abram.temp}.}
 
 \item{at}{String specifying whether to estimate the intensity at a mesh (\code{at = "bins"}) or only at the points of \code{X} (\code{at = "points"}).}
 }
