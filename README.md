@@ -31,14 +31,14 @@ Direct adaptive estimation of the intensity
 
 Adaptive intensity estimation using a partition algorithm
 
-![Amazon fires intensity](docs/amazon1.png)
+![Amazon fires intensity](tools/amazon1.png)
 
 -   `dens.par()` (non-separable)
 -   `dens.par.sep()` (separable)
 
 Bandwidths calculation
 
-![Variable bandwidth in a spatio-temporal point pattern](docs/variableband1.png)
+![Variable bandwidth in a spatio-temporal point pattern](tools/variableband1.png)
 
 -   `bw.abram.temp()` (temporal)
 
