@@ -7,7 +7,6 @@ vignette: >
   %\VignetteIndexEntry{spatiotemporal_intenstiy}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-  %\VignetteDepends{spatstat, sparr}
 ---
 
 ```{r setup, echo=FALSE, warning=FALSE, message=FALSE}
