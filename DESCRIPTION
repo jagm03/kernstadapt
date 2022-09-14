@@ -1,6 +1,6 @@
 Package: kernstadapt
 Title: Spatio-Temporal Adaptive Kernel Estimators for Intensities
-Version: 0.0.1.0
+Version: 0.0.1
 Authors@R: c(
     person("Jonatan A", "González", , "jonathan.gonzalez@kaust.edu.sa", 
             role = c("aut", "cre"), comment = c(ORCID = "0000-0002-2296-5271")),
