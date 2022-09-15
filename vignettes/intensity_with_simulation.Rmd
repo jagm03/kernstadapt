@@ -31,7 +31,7 @@ First, we want to check the intensity using an artificial point pattern. Therefo
 
 ```{r}
 # Number of points coming from a Poisson distribution with mean 1000
-N <- rpois(1, 500)
+N <- rpois(1, 1000)
 ```
 
 Then we set a covariance model for the underlying random field; in our case, we chose a non-separable Geneiting covariance function with its parameters. We set the additional parameters for the random field simulation as the mesh, variance and scales.
