@@ -2,8 +2,8 @@
 #'
 #' Provides an adaptive-bandwidth kernel estimate for spatio-temporal point patterns in a non-separable fashion by calculating the classical estimator, i.e., the slowest estimation.
 #'
-#' @param X A spatial point pattern (an object of class \code{ppp}) with the spatial coordinates of the observations
-#' @param t A numeric vector of temporal coordinates with equal length to the number of points in \code{X}. This gives the time associated with each spatial point.
+#' @param X A spatial point pattern (an object of class \code{ppp}) with the spatial coordinates of the observations. It may contain marks representing times.
+#' @param t A numeric vector of temporal coordinates with equal length to the number of points in \code{X}. This gives the time associated with each spatial point. This argument is not necessary if time marks are provided to the point pattern \code{X}.
 #' @param dimyx Spatial pixel resolution. The default is 128 for each axes.
 #' @param dimt Temporal bin vector dimension. The default is 128.
 #' @param bw.xy Numeric vector of spatial smoothing bandwidths for each point in \code{X}. By default this is computed using \link[spatstat.core]{bw.abram}, with \code{h0} given by \link[sparr]{OS}.

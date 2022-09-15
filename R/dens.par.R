@@ -2,8 +2,8 @@
 #'
 #' Provides an adaptive-bandwidth kernel estimate for spatio-temporal point patterns in a non-separable fashion by using binning of the bandwidth values.
 #'
-#' @param X A spatial point pattern (an object of class \code{ppp}) with the spatial coordinates of the observations.
-#' @param t A numeric vector of temporal coordinates with equal length to the number of points in \code{X}. This gives the time associated with each spatial point.
+#' @param X A spatial point pattern (an object of class \code{ppp}) with the spatial coordinates of the observations. It may contain marks representing times.
+#' @param t A numeric vector of temporal coordinates with equal length to the number of points in \code{X}. This gives the time associated with each spatial point. This argument is not necessary if time marks are provided to the point pattern \code{X}.
 #' @param dimyx Spatial pixel resolution. The default is 128 for each axes.
 #' @param dimt Temporal bin vector dimension. The default is 128.
 #' @param bw.xy Numeric vector of spatial smoothing bandwidths for each point in \code{X}. By default this is computed using \link[spatstat.core]{bw.abram}.
@@ -19,15 +19,18 @@
 #' @return
 #' If \code{at = "points"} (the default), the result is a numeric vector with one entry for each data point in \code{X}. if \code{at = "bins"} is a list named (by time-point) list of pixel images (\link[spatstat.geom]{im} objects) corresponding to the joint spatio-temporal intensity over space at each discretised time bin.
 #'
+#' @references
+#' González J.A. and Moraga P. (2018)
+#' An adaptive kernel estimator for the intensity function of spatio-temporal point processes
+#' <arXiv:2208.12026>
+#'
 #' @author Jonatan A. González
 #'
 #' @examples
-#' \dontrun{
-#' X <- rpoispp(1400)
-#' t <- rbeta(X$n, 1,4,0.8)
-#' stIntensity <- dens.par(X,t, at = "bins")
-#' plot(as.imlist(stIntensity[13:16]), main = 'Non-separable Example')
-#' }
+#' data(lGCpp)
+#' stIntensity <- dens.par(lGCpp, dimt = 32)
+#' plot(spatstat.geom::as.imlist(stIntensity[13:16]),
+#'      main = 'Non-separable Example')
 #'
 #' @importFrom sparr OS
 #' @importFrom stats quantile
