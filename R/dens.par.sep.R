@@ -30,11 +30,11 @@
 #' @examples
 #' data(santander)
 #' stIntensity <- dens.par.sep(santander,
-#'                             dimt = 32,
+#'                             dimt = 16,
 #'                             ngroups.xy = 3, ngroups.t = 2,
 #'                             at = "bins")
-#' plot(spatstat.geom::as.imlist(stIntensity[13:16]),
-#'      main = 'Separable Example')
+#' plot(spatstat.geom::as.solist(stIntensity[12:15]), ncols = 4,
+#'      main = 'Separable Example', equal.ribbon = T)
 #'
 #' @importFrom spatstat.core densityAdaptiveKernel.ppp
 #' @importFrom spatstat.geom eval.im

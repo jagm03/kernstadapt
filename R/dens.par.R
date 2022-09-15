@@ -28,9 +28,9 @@
 #'
 #' @examples
 #' data(lGCpp)
-#' stIntensity <- dens.par(lGCpp, dimt = 32)
-#' plot(spatstat.geom::as.imlist(stIntensity[13:16]),
-#'      main = 'Non-separable Example')
+#' stIntensity <- dens.par(lGCpp, dimt = 16)
+#' plot(spatstat.geom::as.imlist(stIntensity[13:16]), ncols = 4,
+#'      main = 'Non-separable Example', equal.ribbon = T)
 #'
 #' @importFrom sparr OS
 #' @importFrom stats quantile
