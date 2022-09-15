@@ -35,19 +35,18 @@ Then the function computes Fisher's test statistic and get a p-value based on Mo
 This is a fast preliminary separability test.
 }
 \examples{
-\dontrun{
+data(lGCpp)
+separability.test(lGCpp, nx = 5, ny = 4, nt = 3, nperm = 500)
+
+\donttest{
 data(aegiss)
-separability.test(X = unmark(aegiss), t = marks(aegiss))
-}
-\dontrun{
-data(amazon)
-separability.test(X = unmark(amazon), t = marks(amazon),
-                  nx = 10, ny = 10, nt = 20, nperm = 100)
+separability.test(aegiss, nx = 8, ny = 8, nt = 4)
 }
 
 }
 \references{
-Ghorbani et al. (2021) Testing the first-order separability hypothesis for spatio-temporal point patterns, \emph{Computational Statistics & Data Analysis,} Vol. 161, p. 107245.
+Ghorbani et al. (2021) Testing the first-order separability hypothesis for spatio-temporal point patterns,
+\emph{Computational Statistics & Data Analysis,} \bold{161}, p.107245.
 }
 \author{
 Jonatan A. González
