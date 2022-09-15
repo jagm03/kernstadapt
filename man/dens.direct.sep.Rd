@@ -41,15 +41,13 @@ The arguments \code{bw.xy} and \code{bw.t} specify the smoothing bandwidth vecto
 The method partition the range of bandwidths into intervals, subdividing the points of the pattern \code{X} and \code{t} into sub-patterns according to the bandwidths, and applying fixed-bandwidth smoothing to each sub-pattern. Specifying \code{ngroups.xy = 1} is the same as fixed-bandwidth smoothing with bandwidth \code{sigma = median(bw.xy)} in the spatial case and \code{ngroups.t = 1} is the same as fixed-bandwidth smoothing with bandwidth \code{sigma = median(bw.xy)}.
 }
 \examples{
-\donttest{
 data(santander)
-X <- santander[sample.int(500)]
+X <- santander[sample.int(200)]
 stIntensity <- dens.direct.sep(X,
-                               dimyx = 64, dimt = 16,
+                               dimyx = 32, dimt = 6,
                                at = "bins")
-plot(spatstat.geom::as.imlist(stIntensity[12:15]),
+plot(spatstat.geom::as.imlist(stIntensity[2:4]),
      main = 'Direct separable example')
-}
 
 }
 \references{
