@@ -21,7 +21,7 @@
 #' @references
 #' González J.A. and Moraga P. (2018)
 #' An adaptive kernel estimator for the intensity function of spatio-temporal point processes
-#' <arXiv:2208.12026>
+#' <https://arxiv.org/pdf/2208.12026.pdf>
 #'
 #' @author Jonatan A. González
 #'
