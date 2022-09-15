@@ -19,7 +19,7 @@ dens.par(
 \arguments{
 \item{X}{A spatial point pattern (an object of class \code{ppp}) with the spatial coordinates of the observations. It may contain marks representing times.}
 
-\item{t}{A numeric vector of temporal coordinates with equal length to the number of points in \code{X}. This gives the time associated with each spatial point. This argument is not neccessary if time marks are provided to the point pattern \code{X}.}
+\item{t}{A numeric vector of temporal coordinates with equal length to the number of points in \code{X}. This gives the time associated with each spatial point. This argument is not necessary if time marks are provided to the point pattern \code{X}.}
 
 \item{dimyx}{Spatial pixel resolution. The default is 128 for each axes.}
 
@@ -52,6 +52,11 @@ stIntensity <- dens.par(lGCpp, dimt = 32)
 plot(spatstat.geom::as.imlist(stIntensity[13:16]),
      main = 'Non-separable Example')
 
+}
+\references{
+González J.A. and Moraga P. (2018)
+An adaptive kernel estimator for the intensity function of spatio-temporal point processes
+\url{arXiv:2208.12026}
 }
 \author{
 Jonatan A. González

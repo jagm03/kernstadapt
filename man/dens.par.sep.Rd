@@ -17,9 +17,9 @@ dens.par.sep(
 )
 }
 \arguments{
-\item{X}{A spatial point pattern (an object of class \code{ppp}) with the spatial coordinates of the observations.}
+\item{X}{A spatial point pattern (an object of class \code{ppp}) with the spatial coordinates of the observations. It may contain marks representing times.}
 
-\item{t}{A numeric vector of temporal coordinates with equal length to the number of points in \code{X}. This gives the time associated with each spatial point.}
+\item{t}{A numeric vector of temporal coordinates with equal length to the number of points in \code{X}. This gives the time associated with each spatial point. This argument is not necessary if time marks are provided to the point pattern \code{X}.}
 
 \item{dimyx}{Spatial pixel resolution. The default is 128 for each axes.}
 
@@ -47,13 +47,19 @@ The arguments \code{bw.xy} and \code{bw.t} specify the smoothing bandwidth vecto
 The method partition the range of bandwidths into intervals, subdividing the points of the pattern \code{X} and \code{t} into sub-patterns according to the bandwidths, and applying fixed-bandwidth smoothing to each sub-pattern. Specifying \code{ngroups.xy = 1} is the same as fixed-bandwidth smoothing with bandwidth \code{sigma = median(bw.xy)} in the spatial case and \code{ngroups.t = 1} is the same as fixed-bandwidth smoothing with bandwidth \code{sigma = median(bw.xy)}.
 }
 \examples{
-\dontrun{
-X <- rpoispp(1400)
-t <- rbeta(X$n, 1,4,0.8)
-stIntensity <- dens.par.sep(X,t, at = "bins")
-plot(as.imlist(stIntensity[13:16]), main = 'Separable Example')
-}
+data(santander)
+stIntensity <- dens.par.sep(santander,
+                            dimt = 32,
+                            ngroups.xy = 3, ngroups.t = 2,
+                            at = "bins")
+plot(spatstat.geom::as.imlist(stIntensity[13:16]),
+     main = 'Separable Example')
 
+}
+\references{
+González J.A. and Moraga P. (2018)
+An adaptive kernel estimator for the intensity function of spatio-temporal point processes
+\url{arXiv:2208.12026}
 }
 \author{
 Jonatan A. González

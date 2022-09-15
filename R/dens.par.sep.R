@@ -28,12 +28,13 @@
 #' @author Jonatan A. González
 #'
 #' @examples
-#' \dontrun{
-#' X <- rpoispp(1400)
-#' t <- rbeta(X$n, 1,4,0.8)
-#' stIntensity <- dens.par.sep(X,t, at = "bins")
-#' plot(as.imlist(stIntensity[13:16]), main = 'Separable Example')
-#' }
+#' data(santander)
+#' stIntensity <- dens.par.sep(santander,
+#'                             dimt = 32,
+#'                             ngroups.xy = 3, ngroups.t = 2,
+#'                             at = "bins")
+#' plot(spatstat.geom::as.imlist(stIntensity[13:16]),
+#'      main = 'Separable Example')
 #'
 #' @importFrom spatstat.core densityAdaptiveKernel.ppp
 #' @importFrom spatstat.geom eval.im
