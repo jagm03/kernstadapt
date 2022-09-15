@@ -42,8 +42,8 @@ This function computes a non-separable spatio-temporal adaptive kernel estimate 
 data(lGCpp)
 X <- lGCpp[sample.int(200)] # A random subset
 stIntensity <- dens.direct(X, dimyx = 16, dimt = 4)
-plot(spatstat.geom::as.imlist(stIntensity), ncols = 4,
-     main = 'Non-separable direct example', equal.ribbon = T)
+plot(spatstat.geom::as.solist(stIntensity), ncols = 4,
+     main = 'Non-separable direct example', equal.ribbon = TRUE)
 
 \donttest{
 data(aegiss)

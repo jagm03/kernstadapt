@@ -53,7 +53,7 @@ stIntensity <- dens.par.sep(santander,
                             ngroups.xy = 3, ngroups.t = 2,
                             at = "bins")
 plot(spatstat.geom::as.solist(stIntensity[12:15]), ncols = 4,
-     main = 'Separable Example', equal.ribbon = T)
+     main = 'Separable Example', equal.ribbon = TRUE)
 
 }
 \references{

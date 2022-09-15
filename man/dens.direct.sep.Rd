@@ -46,8 +46,8 @@ X <- santander[sample.int(200)]
 stIntensity <- dens.direct.sep(X,
                                dimyx = 32, dimt = 6,
                                at = "bins")
-plot(spatstat.geom::as.imlist(stIntensity[2:4]),
-     main = 'Direct separable example')
+plot(spatstat.geom::as.solist(stIntensity[2:4]),
+     main = 'Direct separable example', equal.ribbon = TRUE)
 
 }
 \references{
