@@ -21,10 +21,14 @@
 #' @author Jonatan A. González
 #'
 #' @examples
-#' X <- spatstat::rpoispp(1000)
-#' t <- rbeta(X$n, 1,4,0.8)
-#' stIntensity <- dens.direct.sep(X, t, at = "bins")
-#' plot(as.imlist(stIntensity[13:16]), main = 'Direct separable example')
+#' \donttest{
+#' data(santander)
+#' X <- santander[sample.int(500)]
+#' stIntensity <- dens.direct.sep(X,
+#'                                dimyx = 64, dimt = 16,
+#'                                at = "bins")
+#' plot(spatstat.geom::as.imlist(stIntensity[12:15]),
+#'      main = 'Direct separable example')
 #' }
 #'
 #' @export
