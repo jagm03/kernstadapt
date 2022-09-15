@@ -11,7 +11,7 @@ dens.direct(
   dimt = 128,
   bw.xy = NULL,
   bw.t = NULL,
-  at = c("points", "bins")
+  at = c("bins", "points")
 )
 }
 \arguments{
@@ -39,6 +39,13 @@ Provides an adaptive-bandwidth kernel estimate for spatio-temporal point pattern
 This function computes a non-separable spatio-temporal adaptive kernel estimate of the intensity. It starts from a planar point pattern \code{X} and a vector of times \code{t} and apply a non-separable kernel estimator for each of the points of \code{X}. The arguments \code{bw.xy} and \code{bw.t} specify the smoothing bandwidth vectors to be applied to each of the points in \code{X} and \code{t}. They should be a numeric vectors of bandwidths.
 }
 \examples{
+data(lGCpp)
+X <- lGCpp[sample.int(200)] # A random subset
+stIntensity <- dens.direct(X, dimyx = 16, dimt = 4)
+plot(spatstat.geom::as.imlist(stIntensity[12:15]), ncols = 4,
+     main = 'Non-separable direct example', equal.ribbon = T)
+
+
 \donttest{
 data(aegiss)
 X <- aegiss[sample.int(500)] # A random subset

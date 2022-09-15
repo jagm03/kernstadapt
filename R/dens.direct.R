@@ -24,6 +24,13 @@
 #' @author Jonatan A. González
 #'
 #' @examples
+#' data(lGCpp)
+#' X <- lGCpp[sample.int(200)] # A random subset
+#' stIntensity <- dens.direct(X, dimyx = 16, dimt = 4)
+#' plot(spatstat.geom::as.imlist(stIntensity[12:15]), ncols = 4,
+#'      main = 'Non-separable direct example', equal.ribbon = T)
+#'
+#'
 #' \donttest{
 #' data(aegiss)
 #' X <- aegiss[sample.int(500)] # A random subset
@@ -45,7 +52,7 @@
 dens.direct <- function(X, t = NULL,#point patterns
                         dimyx = 128, dimt = 128, #resolution
                         bw.xy = NULL, bw.t = NULL, #bandwidths
-                        at = c("points", "bins") #at
+                        at = c("bins", "points") #at
 ){
   verifyclass(X, "ppp")
   n <- npoints(X)

@@ -9,7 +9,7 @@ dens.par.temp(
   dimt = 128,
   bw.t = NULL,
   ngroups.t = NULL,
-  at = c("points", "bins")
+  at = c("bins", "points")
 )
 }
 \arguments{

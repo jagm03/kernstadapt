@@ -39,7 +39,7 @@ dens.par.temp <- function(t,
                           dimt = 128,
                           bw.t = NULL,
                           ngroups.t = NULL,
-                          at = c("points", "bins")){
+                          at = c("bins", "points")){
   stopifnot(sum(t < 0) == 0)
   at <- match.arg(at)
   nT <- length(t)
