@@ -18,16 +18,20 @@
 #' @author Jonatan A. González
 #'
 #' @examples
-#' \dontrun{
-#' X <- rpoispp(400)
-#' t <- rbeta(X$n, 1,4,0.8)
-#' stIntensity <- dens.direct(X, t, dimt = 32, at = "bins")
-#' plot(as.imlist(stIntensity[13:16]), main = 'Non-separable direct example')
+#' \donttest{
+#' data(aegiss)
+#' X <- aegiss[sample.int(500)] # A random subset
+#' stIntensity <- dens.direct(X,
+#'                            dimyx = 32, dimt = 16,
+#'                            at = "bins")
+#' plot(spatstat.geom::as.imlist(stIntensity[12:15]),
+#'      main = 'Non-separable direct example')
 #' }
 #'
 #' @importFrom spatstat.utils check.nvector
 #' @importFrom spatstat.core bw.abram density.ppp
-#' @importFrom spatstat.geom split.ppp im as.mask safelookup marks unmark Window npoints
+#' @importFrom spatstat.geom split.ppp im as.mask safelookup marks unmark Window npoints plot.imlist as.imlist
+#' @importFrom spatstat.random rpoispp
 #' @importFrom misc3d kde3d
 #' @importFrom sparr OS
 #' @importFrom stats pnorm

@@ -21,8 +21,7 @@
 #' @author Jonatan A. González
 #'
 #' @examples
-#' \dontrun{
-#' X <- rpoispp(1400)
+#' X <- spatstat::rpoispp(1000)
 #' t <- rbeta(X$n, 1,4,0.8)
 #' stIntensity <- dens.direct.sep(X, t, at = "bins")
 #' plot(as.imlist(stIntensity[13:16]), main = 'Direct separable example')

@@ -39,11 +39,14 @@ Provides an adaptive-bandwidth kernel estimate for spatio-temporal point pattern
 This function computes a non-separable spatio-temporal adaptive kernel estimate of the intensity. It starts from a planar point pattern \code{X} and a vector of times \code{t} and apply a non-separable kernel estimator for each of the points of \code{X}. The arguments \code{bw.xy} and \code{bw.t} specify the smoothing bandwidth vectors to be applied to each of the points in \code{X} and \code{t}. They should be a numeric vectors of bandwidths.
 }
 \examples{
-\dontrun{
-X <- rpoispp(400)
-t <- rbeta(X$n, 1,4,0.8)
-stIntensity <- dens.direct(X, t, dimt = 32, at = "bins")
-plot(as.imlist(stIntensity[13:16]), main = 'Non-separable direct example')
+\donttest{
+data(aegiss)
+X <- aegiss[sample.int(500)] # A random subset
+stIntensity <- dens.direct(X,
+                           dimyx = 32, dimt = 16,
+                           at = "bins")
+plot(spatstat.geom::as.imlist(stIntensity[12:15]),
+     main = 'Non-separable direct example')
 }
 
 }
