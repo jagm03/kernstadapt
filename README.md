@@ -31,7 +31,7 @@ Direct adaptive estimation of the intensity
 
 Adaptive intensity estimation using a partition algorithm
 
-![Amazon fires intensity](tools/amazon1.png)
+![Amazon fires intensity](tools/amazon.png)
 
 -   `dens.par()` (non-separable)
 -   `dens.par.sep()` (separable)
