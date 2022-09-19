@@ -27,7 +27,8 @@ The Amazon Dashboard (\url{http://www.globalfiredata.org})
 data(amazon)
 head(amazon)
 # Plot a sample
-plot(amazon[sample(amazon$n, 1000)], bg = heat.colors(20), pch = 21, cex = 1)
+X <- amazon[sample.int(amazon$n, 3000)]
+plot(X, bg = rainbow(250), pch = 21, main = "Amazon fires")
 }
 \keyword{datasets}
 \keyword{amazon}

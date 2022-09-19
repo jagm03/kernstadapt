@@ -34,7 +34,7 @@ Oxford University Press.
 \examples{
 data(aegiss)
 head(aegiss)
-plot(aegiss, bg = terrain.colors(20), pch = 21, cex = 1)
+plot(aegiss, bg = rainbow(250), pch = 21)
 }
 \keyword{datasets}
 \keyword{aegiss}
