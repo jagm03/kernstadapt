@@ -38,6 +38,7 @@
 #' }
 #'
 #' @importFrom spatstat.geom verifyclass cut.ppp quadratcount.ppp
+#' @importFrom spatstat.utils short.deparse
 #' @importFrom stats fisher.test
 #' @export
 separability.test <- function(X, t = NULL,
@@ -45,6 +46,7 @@ separability.test <- function(X, t = NULL,
                               nperm = 1000)
 {
   verifyclass(X, "ppp")
+  main <- short.deparse(substitute(X))
   n <- npoints(X)
   if (missing(nx) || is.null(nx)) {
     nx <- ceiling(n ^ (1/6))
@@ -69,7 +71,7 @@ separability.test <- function(X, t = NULL,
   testsep <- fisher.test(nij, simulate.p.value = T,  B = nperm)
   testsep$method[1] <- "Separability test based on Fisher's for counting data"
   testsep$alternative <- "Not spatio-temporal separability"
-  testsep$data.name <- "Point pattern X with times t"
+  testsep$data.name <- paste("Point pattern", main)
   testsep
 }
 
