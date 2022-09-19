@@ -70,7 +70,8 @@ separability.test <- function(X, t = NULL,
   nij <- sapply(Tj, function(a) as.vector(quadratcount.ppp(a, nx = nx, ny = ny)))
   testsep <- fisher.test(nij, simulate.p.value = T,  B = nperm)
   testsep$method[1] <- "Separability test based on Fisher's for counting data"
-  testsep$alternative <- "Not spatio-temporal separability"
+  testsep$alternative <- paste("The point pattern", main,
+                               "is not spatio-temporal separable")
   testsep$data.name <- paste("Point pattern", main)
   testsep
 }
