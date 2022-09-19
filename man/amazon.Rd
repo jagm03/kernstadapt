@@ -24,12 +24,10 @@ A spatio-temporal point pattern of locations and times of active deforestation f
 The Amazon Dashboard (\url{http://www.globalfiredata.org})
 }
 \examples{
-\dontrun{
 data(amazon)
 head(amazon)
 # Plot a sample
 plot(amazon[sample(amazon$n, 1000)], bg = heat.colors(20), pch = 21, cex = 1)
-}
 }
 \keyword{datasets}
 \keyword{amazon}
