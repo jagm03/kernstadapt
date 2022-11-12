@@ -17,7 +17,7 @@ RoxygenNote: 7.2.1
 Imports: 
     misc3d,
     sparr,
-    spatstat.core,
+    spatstat.explore,
     spatstat.geom,
     spatstat.random,
     spatstat.utils
