@@ -23,7 +23,7 @@ dens.direct.sep(
 
 \item{dimt}{Temporal bin vector dimension. The default is 128.}
 
-\item{bw.xy}{Numeric vector of spatial smoothing bandwidths for each point in \code{X}. By default this is computed using \link[spatstat.core]{bw.abram}.}
+\item{bw.xy}{Numeric vector of spatial smoothing bandwidths for each point in \code{X}. By default this is computed using \link[spatstat.explore]{bw.abram}.}
 
 \item{bw.t}{Numeric vector of temporal smoothing bandwidths for each point in \code{t}. By default this is computed using \link{bw.abram.temp}.}
 
