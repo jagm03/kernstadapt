@@ -1,6 +1,6 @@
 Package: kernstadapt
-Title: Spatio-Temporal Adaptive Kernel Estimators for Intensities
-Version: 0.0.2
+Title: Adaptive Kernel Estimators For Point Process Intensities On Linear Networks
+Version: 0.2.0
 Authors@R: c(
     person("Jonatan A", "González", , "jonathan.gonzalez@kaust.edu.sa", 
             role = c("aut", "cre"), comment = c(ORCID = "0000-0002-2296-5271")),
@@ -21,6 +21,7 @@ Imports:
     spatstat.geom,
     spatstat.random,
     spatstat.utils
+    spatstat.linnet
 Suggests: 
     knitr,
     rmarkdown,
