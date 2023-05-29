@@ -51,36 +51,70 @@
 #'
 #' @importFrom stats bw.nrd0 density.default approxfun
 #' @importFrom spatstat.utils check.1.real
+#' @importFrom spatstat.geom is.lpp
+#' @importFrom spatstat.explore resolve.2D.kernel
 #' @export
-bw.abram.temp <- function (t, h0 = NULL,
-                           nt = 128,
-                           trim = NULL,
-                           at = "points")
-{
-  t <- checkt(t)
-  stopifnot(sum(t < 0) == 0)
-  if (missing(trim) || is.null(trim)) {
-    trim <- 0.25 * diff(range(t))
-  }
-  if (missing(h0) || is.null(h0)) {
-    h0 <- bw.nrd0(t)
-  }
-  else {
+#'
+#'   bw.abram.R
+#'
+#'   Abramson bandwidths
+#'
+#'   $Revision: 1.9 $ $Date: 2023/03/07 07:26:49 $
+#'
+bw.abram.ppp <- function(L, h0,
+                         ...,
+                         at = c("points", "pixels"),
+                         hp = h0, pilot = NULL, trim = 5,
+                         smoother = density.lpp){
+  stopifnot(is.lpp(X))#
+  at <- match.arg(at)
+
+  if(missing(h0) || is.null(h0)) {
+    h0 <- resolve.2D.kernel(x = as.ppp(x), ...)$sigma
+  } else {
     check.1.real(h0)
     stopifnot(h0 > 0)
   }
+
   check.1.real(trim)
   stopifnot(trim > 0)
-  pilot.data <- t
-  pilot <- density.default(t, bw = h0, kernel = "gaussian", n = nt)
-  pilotfun <- approxfun(pilot$x, pilot$y)
-  pilotvalues <- pilotfun(pilot.data)
-  gamma <- exp(mean(log(pilotvalues[pilotvalues > 0]))) ^ (- 0.5)
-  switch(at, points = {
-    bw <- h0 * pmin((pilotvalues ^ (-0.5)) / gamma, trim)
-  }, bins = {
-    bw <- pilot
-    bw$y <- (h0 * pmin((pilot$y ^ (-0.5)) / gamma, trim))
-  })
+
+  pilot.data <- X
+  imwin <- as.im(Window(X), ...)
+
+  if(is.im(pilot)){
+    if(!compatible.im(imwin,pilot))
+      stop("'X' and 'pilot' have incompatible spatial domains", call.=FALSE)
+    #' clip the worst small values away
+    pilot[pilot<=0] <- min(pilot[pilot>0])
+  } else if(is.ppp(pilot)){
+    if(!compatible.im(imwin,as.im(Window(pilot), ...)))
+      stop("'X' and 'pilot' have incompatible spatial domains", call.=FALSE)
+    pilot.data <- pilot
+  } else if(!is.null(pilot))
+    stop("if supplied, 'pilot' must be a pixel image or a point pattern",
+         call.=FALSE)
+
+  if(!is.im(pilot)) {
+    if(is.character(smoother)) {
+      smoother <- get(smoother, mode="function")
+    } else stopifnot(is.function(smoother))
+    pilot <- smoother(pilot.data,sigma=hp,positive=TRUE,...)
+  }
+
+  pilot <- pilot/integral(pilot) # scale to probability density
+  pilotvalues <- safelookup(pilot, pilot.data, warn=FALSE)
+  ## geometric mean re-scaler (Silverman, 1986; ch 5).
+  gamma <- exp(mean(log(pilotvalues[pilotvalues > 0])))^(-0.5)
+
+  switch(at,
+         points = {
+           pilot.X <- safelookup(pilot,X,warn=FALSE)
+           bw <- h0 * pmin((pilot.X^(-0.5))/gamma,trim)
+         },
+         pixels = {
+           bw <- eval.im(h0 * pmin((pilot^(-0.5))/gamma, trim))
+         })
+
   return(bw)
 }
