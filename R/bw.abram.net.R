@@ -34,8 +34,7 @@
 #' @author Jonatan A. González
 #'
 #' @examples
-#' t <- 2 * rbeta(100, 1.5, 5.5, 0.2) #Simulated temporal point pattern
-#' bw.abram.temp(t)
+#' #To be done
 #'
 #' @importFrom stats bw.nrd0 density.default approxfun
 #' @importFrom spatstat.utils check.1.real
