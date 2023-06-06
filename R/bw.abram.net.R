@@ -42,7 +42,7 @@
 #' @importFrom spatstat.explore resolve.2D.kernel
 #' @importFrom spatstat.linet integral.linim densityQuick.lpp
 #' @export
-bw.abram.ppp <- function(X, h0,
+bw.abram.net <- function(X, h0,
                          at = c("points", "pixels"),
                          hp = h0, pilot = NULL, trim = 5,
                          smoother = densityQuick.lpp,
