@@ -72,9 +72,9 @@ bw.abram.net <- function(X, h0,
     if(!compatible.im(imwin, as.linim(flatdensityfunlpp(pilot))))
       stop("'X' and 'pilot' have incompatible network domains", call.=FALSE)
     pilot.data <- pilot
-  } else if(!is.null(pilot))
+  } else if(!is.null(pilot)){
     stop("if supplied, 'pilot' must be a pixel image on the linear network or a point pattern",
-         call.=FALSE)
+         call.=FALSE)}
 
   if(!is.linim(pilot)) {
     if(is.character(smoother)) {
@@ -84,17 +84,17 @@ bw.abram.net <- function(X, h0,
   }
 
   pilot <- pilot / integral.linim(pilot) # scale to probability density
-  pilotvalues <- safelookup(pilot, pilot.data, warn=FALSE)
+  pilotvalues <- safelookup(pilot, as.ppp(pilot.data), warn=FALSE)
   ## geometric mean re-scaler (Silverman, 1986; ch 5).
   gamma <- exp(mean(log(pilotvalues[pilotvalues > 0])))^(-0.5)
 
   switch(at,
          points = {
-           pilot.X <- safelookup(pilot,X,warn=FALSE)
-           bw <- h0 * pmin((pilot.X^(-0.5))/gamma,trim)
+           pilot.X <- safelookup(pilot, as.ppp(X), warn = FALSE)
+           bw <- h0 * pmin((pilot.X^(-0.5)) / gamma, trim)
          },
          pixels = {
-           bw <- eval.linim(h0 * pmin((pilot^(-0.5))/gamma, trim))
+           bw <- eval.linim(h0 * pmin((pilot^(-0.5)) / gamma, trim))
          })
 
   return(bw)
