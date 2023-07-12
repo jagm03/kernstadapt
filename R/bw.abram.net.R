@@ -7,7 +7,7 @@
 #' @param trim A trimming value to cut extreme large bandwidths.
 #' @param at Character string specifying whether to compute bandwidths at the points (at = "points", the default) or to compute bandwidths at every bin in a bin grid (at = "bins").
 #' @param smoother Smoother for the pilot. A function or character string, specifying the function to be used to compute the pilot estimate when pilot is NULL or is a point pattern.
-#' @param ... Aditional arguments passed to smoother to control the type of smoothing.
+#' @param ... Additional arguments passed to smoother to control the type of smoothing.
 #'
 #' @details
 #' This function returns a set of adaptive smoothing bandwidths driven by Abramson's (1982) method for a point pattern in a linear network.
@@ -27,20 +27,14 @@
 #'Abramson, I. (1982) On bandwidth variation in kernel estimates --- a square root law.
 #' \emph{Annals of Statistics}, \bold{10}(4), 1217-1223.\cr
 #'
-#' Davies, T.M., Marshall, J.C., and Hazelton, M.L. (2018)
-#' Tutorial on kernel estimation of continuous spatial and spatiotemporal relative risk.
-#' \emph{Statistics in Medicine}, \bold{37}(7), 1191-1221.\cr
-#'
 #' @author Jonatan A. González
 #'
 #' @examples
 #' #To be done
 #'
-#' @importFrom stats bw.nrd0 density.default approxfun
-#' @importFrom spatstat.utils check.1.real
-#' @importFrom spatstat.geom is.lpp
+#' @importFrom spatstat.geom is.lpp compatible.im
 #' @importFrom spatstat.explore resolve.2D.kernel
-#' @importFrom spatstat.linet integral.linim densityQuick.lpp
+#' @importFrom spatstat.linet as.linim flatdensityfunlpp integral.linim densityQuick.lpp eval.linim
 #' @export
 bw.abram.net <- function(X, h0,
                          at = c("points", "pixels"),
