@@ -2,22 +2,17 @@
 #'
 #' Provides an adaptive-bandwidth kernel estimate for spatio-temporal point patterns in a non-separable fashion by using binning of the bandwidth values.
 #'
-#' @param X A spatial point pattern (an object of class \code{ppp}) with the spatial coordinates of the observations. It may contain marks representing times.
-#' @param t A numeric vector of temporal coordinates with equal length to the number of points in \code{X}. This gives the time associated with each spatial point. This argument is not necessary if time marks are provided to the point pattern \code{X}.
-#' @param dimyx Spatial pixel resolution. The default is 128 for each axes.
-#' @param dimt Temporal bin vector dimension. The default is 128.
+#' @param X A point pattern on a linear network (an object of class \code{lpp}) to be smoothed.
 #' @param bw.xy Numeric vector of spatial smoothing bandwidths for each point in \code{X}. By default this is computed using \link[spatstat.explore]{bw.abram}.
-#' @param bw.t Numeric vector of temporal smoothing bandwidths for each point in \code{t}. By default this is computed using \link{bw.abram.temp}.
-#' @param ngroups.xy Number of groups in which the spatial bandwidths should be partitioned. If this number is 1, then a classical non-adaptive estimator will be used for the spatial part with a bandwidth selected as the median of the bw.xy vector.
-#' @param ngroups.t Number of groups in which the temporal bandwidths should be partitioned. If this number is 1, then a classical non-adaptive estimator will be used for the temporal part with a bandwidth selected as the median of the bw.t vector.
-#' @param at String specifying whether to estimate the intensity at a mesh (\code{at = "bins"}) or only at the points of \code{X} (\code{at = "points"}).
+#' @param ngroups.xy Number of groups in which the bandwidths should be partitioned. If this number is 1, then a classical non-adaptive estimator will be used for the spatial part with a bandwidth selected as the median of the bw.xy vector.
+#' @param at String specifying whether to estimate the intensity at a mesh (\code{at = "pixels"}) or only at the points of \code{X} (\code{at = "points"}).
 #' @details
-#' This function computes a non-separable spatio-temporal adaptive kernel estimate of the intensity. It starts from a planar point pattern \code{X} and a vector of times \code{t} and partition (cells) the spatial and temporal components to apply a non-separable kernel estimator within each cell.
-#' The arguments \code{bw.xy} and \code{bw.t} specify the smoothing bandwidth vectors to be applied to each of the points in \code{X} and \code{t}. They should be a numeric vectors of bandwidths.
-#' The method partition the range of bandwidths into intervals, subdividing the points of the pattern \code{X} and \code{t} into sub-patterns according to the bandwidths, and applying fixed-bandwidth smoothing to each sub-pattern. Specifying \code{ngroups.xy = 1} is the same as fixed-bandwidth smoothing with bandwidth \code{sigma = median(bw.xy)} in the spatial case and \code{ngroups.t = 1} is the same as fixed-bandwidth smoothing with bandwidth \code{sigma = median(bw.xy)}.
+#' This function computes an adaptive kernel estimate of the intensity on linear networks. It starts from a point pattern \code{X} and partition the spatial component to apply a kernel estimator within each cell.
+#' The argument \code{bw.xy} specify the smoothing bandwidth vectors to be applied to each of the points in \code{X}. It should be a numeric vector of bandwidths.
+#' The method partition the range of bandwidths into intervals, subdividing the points of the pattern \code{X} into sub-patterns according to the bandwidths, and applying fixed-bandwidth smoothing to each sub-pattern. Specifying \code{ngroups.xy = 1} is the same as fixed-bandwidth smoothing with bandwidth \code{sigma = median(bw.xy)} in the spatial case and \code{ngroups.t = 1} is the same as fixed-bandwidth smoothing with bandwidth \code{sigma = median(bw.xy)}.
 #'
 #' @return
-#' If \code{at = "points"} (the default), the result is a numeric vector with one entry for each data point in \code{X}. if \code{at = "bins"} is a list named (by time-point) list of pixel images (\link[spatstat.geom]{im} objects) corresponding to the joint spatio-temporal intensity over space at each discretised time bin.
+#' If \code{at = "points"} (the default), the result is a numeric vector with one entry for each data point in \code{X}. if \code{at = "pixels"} is a pixel image on a linear network (\link[spatstat.linnet]{linim} objects) corresponding to the intensity over linear network.
 #'
 #' @references
 #' González J.A. and Moraga P. (2018)
@@ -37,42 +32,24 @@
 #' @importFrom spatstat.geom setmarks marks
 #' @importFrom spatstat.random rpoispp
 #' @export
-dens.par <- function(X, t = NULL, #point patterns
-                     dimyx = 128, dimt = 128, #resolution
-                     bw.xy = NULL, bw.t = NULL, #bandwidths
-                     ngroups.xy = NULL, ngroups.t = NULL, #groups
-                     at = c("bins", "points") #at
+dens.par <- function(X, #point pattern
+                     ...,
+                     bw.xy = NULL, #bandwidths
+                     ngroups.xy = NULL, #groups
+                     at = c("pixels", "points") #at
 ){
-  verifyclass(X, "ppp")
+  stopifnot(is.lpp(X))
   n <- npoints(X)
-  if(is.null(t)) t <- marks(X)
-  t <- checkt(t)
-  nT <- length(t)
-  if(nT != n)
-    stop(paste("Length of temporal vector does not match number of spatial observations\n   npoints(X) = ",n,"; length(t) = ",length(t), sep = ""))
-
   at <- match.arg(at)
-  range.t <- range(t)
-  ngroups.xy <- check.ngroups(ngroups.xy, N = nT, order = 3)
-  ngroups.t <- check.ngroups(ngroups.t, N = nT, order = 6)
-
-  if (missing(bw.t) || is.null(bw.t)) {
-    bw.t <- bw.abram.temp(t)
-  }
-  else if (is.numeric(bw.t)) {
-    check.nvector(bw.t, nT, oneok = TRUE)
-    if (length(bw.t) == 1)
-      bw.t <- rep(bw.t, nT)
-  }
-  else stop("Argument 'bw.t' should be a single value or a numeric vector")
+  ngroups.xy <- check.ngroups(ngroups.xy, N = n, order = 2)
 
   if (missing(bw.xy) || is.null(bw.xy)) {
-    bw.xy <- bw.abram(X, h0 = OS(X))
+    bw.xy <- bw.abram.net(X, h0 = OS(X))
   }
   else if (is.numeric(bw.xy)) {
-    check.nvector(bw.xy, nT, oneok = TRUE)
+    check.nvector(bw.xy, n, oneok = TRUE)
     if (length(bw.xy) == 1)
-      bw.xy <- rep(bw.xy, nT)
+      bw.xy <- rep(bw.xy, n)
   }
   else stop("Argument 'bw.xy' should be a single value or a numeric vector")
 
