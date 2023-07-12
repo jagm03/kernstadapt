@@ -21,23 +21,18 @@
 #'
 #' @author Jonatan A. González
 #'
-#' @examples
-#' data(lGCpp)
-#' stIntensity <- dens.par(lGCpp, dimt = 16)
-#' plot(spatstat.geom::as.solist(stIntensity[13:16]), ncols = 4,
-#'      main = 'Non-separable Example', equal.ribbon = TRUE)
 #'
 #' @importFrom sparr OS
 #' @importFrom stats quantile
 #' @importFrom spatstat.geom setmarks marks
 #' @importFrom spatstat.random rpoispp
 #' @export
-dens.par <- function(X, #point pattern
-                     ...,
-                     weights = NULL, #optional weights
-                     bw = NULL, #bandwidths
-                     ngroups = NULL, #groups
-                     at = c("pixels", "points") #at
+dens.net.heat <- function(X, #point pattern
+                          ...,
+                          weights = NULL, #optional weights
+                          bw = NULL, #bandwidths
+                          ngroups = NULL, #groups
+                          at = c("pixels", "points") #at
 ){
   stopifnot(is.lpp(X))
   at <- match.arg(at)

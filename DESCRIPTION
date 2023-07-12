@@ -20,7 +20,7 @@ Imports:
     spatstat.explore,
     spatstat.geom,
     spatstat.random,
-    spatstat.utils
+    spatstat.utils,
     spatstat.linnet
 Suggests: 
     knitr,
