@@ -4,6 +4,8 @@
 #'
 #' @param X A point pattern on a linear network (object of class "lpp").
 #' @param h0 The global smoothing bandwidth. The default is the maximal oversmoothing principle of Terrell (1990).
+#' @param pilot Optional. A pilot estimation of the intensity to plug in Abramsom's formula.
+#' @param hp Optional. A scalar pilot bandwidth, used for estimation of the pilot density if required.
 #' @param trim A trimming value to cut extreme large bandwidths.
 #' @param at Character string specifying whether to compute bandwidths at the points (at = "points", the default) or to compute bandwidths at every bin in a bin grid (at = "bins").
 #' @param smoother Smoother for the pilot. A function or character string, specifying the function to be used to compute the pilot estimate when pilot is NULL or is a point pattern.
@@ -32,7 +34,7 @@
 #' @examples
 #' #To be done
 #'
-#' @importFrom spatstat.geom is.lpp compatible.im
+#' @importFrom spatstat.geom is.lpp compatible.im as.ppp is.linim is.ppp
 #' @importFrom spatstat.explore resolve.2D.kernel
 #' @importFrom spatstat.linnet as.linim flatdensityfunlpp integral.linim densityQuick.lpp eval.linim
 #' @export
@@ -60,7 +62,7 @@ bw.abram.net <- function(X, h0,
   if(is.linim(pilot)){
     if(!compatible.im(imwin, pilot))
       stop("'X' and 'pilot' have incompatible network domains", call.=FALSE)
-    #' clip the worst small values away
+    # clip the worst small values away
     pilot[pilot <= 0] <- min(pilot[pilot>0])
   } else if(is.ppp(pilot)){
     if(!compatible.im(imwin, as.linim(flatdensityfunlpp(pilot))))

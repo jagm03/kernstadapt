@@ -22,6 +22,10 @@
 
 \item{at}{Character string specifying whether to compute bandwidths at the points (at = "points", the default) or to compute bandwidths at every bin in a bin grid (at = "bins").}
 
+\item{hp}{Optional. A scalar pilot bandwidth, used for estimation of the pilot density if required.}
+
+\item{pilot}{Optional. A pilot estimation of the intensity to plug in Abramsom's formula.}
+
 \item{trim}{A trimming value to cut extreme large bandwidths.}
 
 \item{smoother}{Smoother for the pilot. A function or character string, specifying the function to be used to compute the pilot estimate when pilot is NULL or is a point pattern.}
