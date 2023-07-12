@@ -34,42 +34,58 @@
 #' @export
 dens.par <- function(X, #point pattern
                      ...,
-                     bw.xy = NULL, #bandwidths
-                     ngroups.xy = NULL, #groups
+                     weights = NULL, #optional weights
+                     bw = NULL, #bandwidths
+                     ngroups = NULL, #groups
                      at = c("pixels", "points") #at
 ){
   stopifnot(is.lpp(X))
-  n <- npoints(X)
   at <- match.arg(at)
-  ngroups.xy <- check.ngroups(ngroups.xy, N = n, order = 2)
+  nX <- npoints(X)
+  ngroups <- check.ngroups(ngroups, N = nX, order = 2)
 
-  if (missing(bw.xy) || is.null(bw.xy)) {
-    bw.xy <- bw.abram.net(X, h0 = OS(X))
+  if(weighted <- !is.null(weights)) {
+    check.nvector(weights, nX, oneok = TRUE, vname = "weights")
+    if(length(weights) == 1) weights <- rep(weights, nX)
+  } else weights <- rep(1, nX)
+
+  if (missing(bw) || is.null(bw)) {
+    bw <- bw.abram.net(X, h0 = OS(X))
   }
-  else if (is.numeric(bw.xy)) {
-    check.nvector(bw.xy, n, oneok = TRUE)
-    if (length(bw.xy) == 1)
-      bw.xy <- rep(bw.xy, n)
+  else if (is.numeric(bw)) {
+    check.nvector(bw, nX, oneok = TRUE)
+    if (length(bw) == 1)
+      bw <- rep(bw, nX)
   }
-  else stop("Argument 'bw.xy' should be a single value or a numeric vector")
+  else stop("Argument 'bw' should be a single value or a numeric vector")
 
-  p.xy <- seq(0, 1, length = ngroups.xy + 1)
-  qbands.xy <- quantile(bw.xy, p.xy)
-  groupid.xy <- findInterval(bw.xy, qbands.xy, all.inside = T)
-  pmid.xy <- (p.xy[ -1 ] + p.xy[ -length(p.xy) ]) / 2
-  qmid.xy <- quantile(bw.xy, pmid.xy)
-  group.xy <- factor(groupid.xy, levels = 1:ngroups.xy)
-  Y.xy <- split(X, group.xy)
+  #divide bandwidths into groups
+  if(ngroups == nX) {
+    ## every data point is a separate group
+    groupid <- 1:nX
+    qmid <- bw
+  } else {
+    # usual case
+    p <- seq(0, 1, length = ngroups + 1)
+    qbands <- quantile(bw, p)
+    groupid <- findInterval(bw, qbands, all.inside = TRUE)
+    # map to middle of group
+    pmid <- (p[-1] + p[-length(p)]) / 2
+    qmid   <- quantile(bw, pmid)
+  }
 
-  # remove zero pp
-  ok1 <- sapply(Y.xy, npoints) > 0
-  Y.xy <- Y.xy[ok1]
-  qmid.xy <- qmid.xy[ok1]
+  marks(X) <- if(weighted) weights else NULL
+  group <- factor(groupid, levels = 1:ngroups)
+  Y <- split(X, group)
 
-  Z <- mapply(densityHeat.lpp, x = Y.xy, sigma = as.list(qmid.xy), SIMPLIFY = F,
-              MoreArgs = list(...))
+  Z <- mapply(densityHeat.lpp,
+              x = Y,
+              sigma = as.list(qmid),
+              SIMPLIFY = F,
+              MoreArgs = list(at = at, ...))
 
-  ZZ <- switch(at, pixels = im.apply(Z, "sum"),
+  ZZ <- switch(at,
+               pixels = im.apply(Z, "sum"),
                points = unsplit(Z, group.xy))
   return(ZZ)
 }
