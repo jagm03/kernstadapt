@@ -54,69 +54,22 @@ dens.par <- function(X, #point pattern
   else stop("Argument 'bw.xy' should be a single value or a numeric vector")
 
   p.xy <- seq(0, 1, length = ngroups.xy + 1)
-  p.t <- seq(0, 1, length = ngroups.t + 1)
   qbands.xy <- quantile(bw.xy, p.xy)
-  qbands.t <- quantile(bw.t, p.t)
   groupid.xy <- findInterval(bw.xy, qbands.xy, all.inside = T)
-  groupid.t <- findInterval(bw.t, qbands.t, all.inside = T)
   pmid.xy <- (p.xy[ -1 ] + p.xy[ -length(p.xy) ]) / 2
-  pmid.t <- (p.t[ -1 ] + p.t[ -length(p.t) ]) / 2
   qmid.xy <- quantile(bw.xy, pmid.xy)
-  qmid.t <- quantile(bw.t, pmid.t)
   group.xy <- factor(groupid.xy, levels = 1:ngroups.xy)
-  group.t <- factor(groupid.t, levels = 1:ngroups.t)
-  BX <- setmarks(X, data.frame(t = t, g.t = group.t))
-  Y.xy <- split(BX, group.xy)
+  Y.xy <- split(X, group.xy)
 
   # remove zero pp
   ok1 <- sapply(Y.xy, npoints) > 0
   Y.xy <- Y.xy[ok1]
   qmid.xy <- qmid.xy[ok1]
 
-  Y.xy <- mapply(function(x, e) {
-    u <- cbind(marks(x), epsilon = e)
-    return(setmarks(x, u))
-  },
-  x = Y.xy, e = as.list(qmid.xy), SIMPLIFY = F)
+  Z <- mapply(densityHeat.lpp, x = Y.xy, sigma = as.list(qmid.xy), SIMPLIFY = F,
+              MoreArgs = list(...))
 
-  Y.xy.t <- unlist(lapply(Y.xy, split, f = "g.t"), recursive = F)
-  Y.xy.t <- lapply(Y.xy.t, function(x) {
-    x$marks$delta = qmid.t[x$marks$g.t]
-    return(x)})
-
-  PP <- lapply(Y.xy.t, function(x) setmarks(unmark(x), x$marks$t))
-  B.XY <- lapply(Y.xy.t, function(x) marks(x)$epsilon[1])
-  B.t <- lapply(Y.xy.t, function(x) marks(x)$delta[1])
-
-  ok <- sapply(PP, npoints) > 0
-  PP <- PP[ok]; B.XY <- B.XY[ok]; B.t <- B.t[ok]
-
-  Z <- mapply(dens.direct.engine, X = PP, bw.xy = B.XY, bw.t = B.t, SIMPLIFY = F,
-              MoreArgs = list(tlim = range.t, sres = dimyx, tres = dimt))
-
-  ZZ <- Reduce("+", Z)
-  WM <- as.mask(X$window, dimyx = dimyx)
-  inside <- WM$m
-  grx <- WM$xcol
-  gry <- WM$yrow
-  zz <- list()
-
-  for(i in 1:dimt){
-    zz[[i]] <- im(ZZ[,, i], xcol = grx, yrow = gry)
-    zz[[i]][!inside] <- NA
-  }
-
-  if (at == "bins")
-    return(zz)
-
-  if (at == "points"){
-    lambda <- rep(NA, nT)
-    tcw <- diff(range.t) / dimt
-    grt <- range.t[1] + 0.5 * tcw + (0:(dimt - 1)) * tcw
-    tC <- findInterval(t, grt, all.inside = T)
-    for (i in 1:nT) {
-      lambda[i] <- safelookup(zz[[tC[i]]], X[i])
-    }
-    return(lambda)
-  }
+  ZZ <- switch(at, pixels = im.apply(Z, "sum"),
+               points = unsplit(Z, group.xy))
+  return(ZZ)
 }
