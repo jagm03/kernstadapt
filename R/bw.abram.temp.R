@@ -2,8 +2,9 @@
 #'
 #' Computes adaptive smoothing bandwidth in the temporal case according to the inverse-square-root rule of Abramson (1982).
 #'
-#' @param t A vector (a temporal point pattern) from which the bandwidths should be computed.
+#' @param X A vector (a temporal point pattern) from which the bandwidths should be computed.
 #' @param h0 The global smoothing bandwidth. The default is Silverman's rule of thumb (bw.nrd0).
+#' @param ... Additional arguments passed to smoother to control the type of smoothing.
 #' @param nt The number of equally spaced points at which the temporal density is to be estimated.
 #' @param trim A trimming value to cut extreme large bandwidths.
 #' @param at Character string specifying whether to compute bandwidths at the points (at = "points", the default) or to compute bandwidths at every bin in a bin grid (at = "bins").
@@ -52,11 +53,17 @@
 #' @importFrom stats bw.nrd0 density.default approxfun
 #' @importFrom spatstat.utils check.1.real
 #' @export
-bw.abram.temp <- function (t, h0 = NULL,
+bw.abram.temp <- function (X, h0 = NULL,
+                           ...,
                            nt = 128,
                            trim = NULL,
                            at = "points")
 {
+  if (is.ppp(X)) {
+    t <- X$marks
+  }
+  if (is.vector(X)) t <- X
+
   t <- checkt(t)
   stopifnot(sum(t < 0) == 0)
   if (missing(trim) || is.null(trim)) {
