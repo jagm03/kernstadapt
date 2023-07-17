@@ -7,18 +7,20 @@
 \method{bw.abram}{net}(
   X,
   h0,
+  ...,
   at = c("points", "pixels"),
   hp = h0,
   pilot = NULL,
   trim = 5,
-  smoother = densityQuick.lpp,
-  ...
+  smoother = densityQuick.lpp
 )
 }
 \arguments{
 \item{X}{A point pattern on a linear network (object of class "lpp").}
 
 \item{h0}{The global smoothing bandwidth. The default is the maximal oversmoothing principle of Terrell (1990).}
+
+\item{...}{Additional arguments passed to smoother to control the type of smoothing.}
 
 \item{at}{Character string specifying whether to compute bandwidths at the points (at = "points", the default) or to compute bandwidths at every bin in a bin grid (at = "bins").}
 
@@ -29,8 +31,6 @@
 \item{trim}{A trimming value to cut extreme large bandwidths.}
 
 \item{smoother}{Smoother for the pilot. A function or character string, specifying the function to be used to compute the pilot estimate when pilot is NULL or is a point pattern.}
-
-\item{...}{Additional arguments passed to smoother to control the type of smoothing.}
 }
 \value{
 If \code{at = "points"} (the default), the result is a numeric vector with one bandwidth for each data point in \code{X}.

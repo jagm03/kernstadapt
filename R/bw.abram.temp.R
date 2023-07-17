@@ -52,7 +52,7 @@
 #'
 #' @importFrom stats bw.nrd0 density.default approxfun
 #' @importFrom spatstat.utils check.1.real
-#' @export
+#' @export bw.abram.temp
 bw.abram.temp <- function (X, h0 = NULL,
                            ...,
                            nt = 128,
