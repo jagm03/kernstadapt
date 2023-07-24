@@ -28,7 +28,7 @@
 #' @importFrom spatstat.linnet densityHeat.lpp as.linim
 #' @importFrom spatstat.geom im.apply
 #' @export
-dens.net.heat <- function(X, #point pattern
+dens.net.heat <- function(X, #point pattern on a linear network
                           ...,
                           weights = NULL, #optional weights
                           bw = NULL, #bandwidths
@@ -46,7 +46,7 @@ dens.net.heat <- function(X, #point pattern
   } else weights <- rep(1, nX)
 
   if (missing(bw) || is.null(bw)) {
-    bw <- bw.abram.net(X, h0 = OS(X))
+    bw <- bw.abram.net(X, h0 = OS(as.ppp(X)))
   }
   else if (is.numeric(bw)) {
     check.nvector(bw, nX, oneok = TRUE)
@@ -79,7 +79,6 @@ dens.net.heat <- function(X, #point pattern
               sigma = as.list(qmid),
               SIMPLIFY = F,
               MoreArgs = list(at = at, ...))
-
 
   ZZ <- switch(at,
                pixels = as.linim(im.apply(Z, "sum"), L = X$domain),
