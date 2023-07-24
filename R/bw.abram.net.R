@@ -37,7 +37,7 @@
 #' @importFrom spatstat.geom is.lpp compatible.im as.ppp is.linim is.ppp
 #' @importFrom spatstat.explore resolve.2D.kernel
 #' @importFrom spatstat.linnet as.linim flatdensityfunlpp integral.linim densityQuick.lpp eval.linim
-#' @export
+#' @export bw.abram.net
 bw.abram.net <- function(X, h0,
                          ...,
                          at = c("points", "pixels"),
