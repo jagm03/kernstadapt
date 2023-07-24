@@ -31,7 +31,8 @@ dens.net.EqualSplit <- function(X, #point pattern on a linear network
                                 weights = NULL, #optional weights
                                 bw = NULL, #bandwidths
                                 ngroups = NULL, #groups
-                                at = c("pixels", "points") #at
+                                at = c("pixels", "points"), #at
+                                verbose = FALSE
 ){
   stopifnot(is.lpp(X))
   at <- match.arg(at)
@@ -76,7 +77,7 @@ dens.net.EqualSplit <- function(X, #point pattern on a linear network
               x = Y,
               sigma = as.list(qmid),
               SIMPLIFY = F,
-              MoreArgs = list(at = at, ...))
+              MoreArgs = list(at = at, verbose = verbose, ...))
 
   ZZ <- switch(at,
                pixels = as.linim(im.apply(Z, "sum"), L = X$domain),
