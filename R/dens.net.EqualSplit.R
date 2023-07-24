@@ -1,6 +1,6 @@
-#' Adaptive linear network intensity estimator based on heat kernel
+#' Adaptive linear netwokr intensity estimator using the Okabe-Sugihara equal-split algorithms
 #'
-#' Provides an adaptive-bandwidth kernel estimate for point patterns on linear networks by using binning of the bandwidth values.
+#' Computes an adaptive-bandwidth kernel estimate for the intensity function through the Okabe-Sugihara equal-split algorithms by using binning of the bandwidth values.
 #'
 #' @param X A point pattern on a linear network (an object of class \code{lpp}) to be smoothed.
 #' @param ... Extra arguments passed to \link[spatstat.linnet]{densityHeat.lpp}.
@@ -24,16 +24,14 @@
 #' @author Jonatan A. González
 #'
 #'
-#' @importFrom spatstat.geom is.lpp
-#' @importFrom spatstat.linnet densityHeat.lpp as.linim
-#' @importFrom spatstat.geom im.apply
+#' @importFrom spatstat.linnet densityEqualSplit
 #' @export
-dens.net.heat <- function(X, #point pattern on a linear network
-                          ...,
-                          weights = NULL, #optional weights
-                          bw = NULL, #bandwidths
-                          ngroups = NULL, #groups
-                          at = c("pixels", "points") #at
+dens.net.EqualSplit <- function(X, #point pattern on a linear network
+                                ...,
+                                weights = NULL, #optional weights
+                                bw = NULL, #bandwidths
+                                ngroups = NULL, #groups
+                                at = c("pixels", "points") #at
 ){
   stopifnot(is.lpp(X))
   at <- match.arg(at)
@@ -74,7 +72,7 @@ dens.net.heat <- function(X, #point pattern on a linear network
   group <- factor(groupid, levels = 1:ngroups)
   Y <- split(X, group)
 
-  Z <- mapply(densityHeat.lpp,
+  Z <- mapply(densityEqualSplit,
               x = Y,
               sigma = as.list(qmid),
               SIMPLIFY = F,
