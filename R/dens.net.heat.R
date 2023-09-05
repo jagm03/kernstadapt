@@ -9,7 +9,7 @@
 #' @param ngroups Number of groups in which the bandwidths should be partitioned. If this number is 1, then a classical non-adaptive estimator will be used for the spatial part with a bandwidth selected as the median of the bw.xy vector.
 #' @param at String specifying whether to estimate the intensity at a mesh (\code{at = "pixels"}) or only at the points of \code{X} (\code{at = "points"}).
 #' @details
-#' This function computes an adaptive kernel estimate of the intensity on linear networks. It starts from a point pattern \code{X} and partition the spatial component to apply a kernel estimator within each cell.
+#' This function computes an adaptive kernel estimate of the intensity on linear networks. It starts from a point pattern \code{X} and partition the component to apply a kernel estimator within each cell.
 #' The argument \code{bw} specifies the smoothing bandwidth vector to be applied to each of the points in \code{X}. It should be a numeric vector of bandwidths.
 #' The method partition the range of bandwidths into intervals, subdividing the points of the pattern \code{X} into sub-patterns according to the bandwidths, and applying fixed-bandwidth smoothing to each sub-pattern. Specifying \code{ngroups = 1} is the same as fixed-bandwidth smoothing with bandwidth \code{sigma = median(bw)}.
 #'
