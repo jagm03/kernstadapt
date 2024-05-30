@@ -26,6 +26,8 @@ dens.net.EqualSplit(
 \item{ngroups}{Number of groups in which the bandwidths should be partitioned. If this number is 1, then a classical non-adaptive estimator will be used for the spatial part with a bandwidth selected as the median of the bw.xy vector.}
 
 \item{at}{String specifying whether to estimate the intensity at a mesh (\code{at = "pixels"}) or only at the points of \code{X} (\code{at = "points"}).}
+
+\item{verbose}{Logical value indicating whether to print progress reports for every partition group.}
 }
 \value{
 If \code{at = "points"} (the default), the result is a numeric vector with one entry for each data point in \code{X}. if \code{at = "pixels"} is a pixel image on a linear network (\link[spatstat.linnet]{linim} objects) corresponding to the intensity over linear network.

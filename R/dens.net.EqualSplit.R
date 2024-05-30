@@ -8,6 +8,7 @@
 #' @param bw Numeric vector of spatial smoothing bandwidths for each point in \code{X}. By default this is computed using \link[spatstat.explore]{bw.abram}.
 #' @param ngroups Number of groups in which the bandwidths should be partitioned. If this number is 1, then a classical non-adaptive estimator will be used for the spatial part with a bandwidth selected as the median of the bw.xy vector.
 #' @param at String specifying whether to estimate the intensity at a mesh (\code{at = "pixels"}) or only at the points of \code{X} (\code{at = "points"}).
+#' @param verbose Logical value indicating whether to print progress reports for every partition group.
 #' @details
 #' This function computes an adaptive kernel estimate of the intensity on linear networks. It starts from a point pattern \code{X} and partition the spatial component to apply a kernel estimator within each cell.
 #' The argument \code{bw} specifies the smoothing bandwidth vector to be applied to each of the points in \code{X}. It should be a numeric vector of bandwidths.
