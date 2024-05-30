@@ -10,7 +10,8 @@ dens.net.EqualSplit(
   weights = NULL,
   bw = NULL,
   ngroups = NULL,
-  at = c("pixels", "points")
+  at = c("pixels", "points"),
+  verbose = FALSE
 )
 }
 \arguments{
