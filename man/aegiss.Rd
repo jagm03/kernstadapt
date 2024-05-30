@@ -28,7 +28,7 @@ Diggle, P. (2015) AEGISS1. Syndromic surveillance of gastro-intestinal illness
 Diggle, L. Knorr-Held, R. B, T. Su, P. Hawtin, and T. Bryant. (2003)
 On-line monitoring of public health surveillance data.
 In B. R. and S. D.F., editors, Monitoring the Health of Populations:
-\emph{Statistical Principles and Methods for Public Health Surveillance.} \bold{233–266}.
+\emph{Statistical Principles and Methods for Public Health Surveillance.} \bold{233-266}.
 Oxford University Press.
 }
 \examples{

@@ -59,7 +59,7 @@ plot(spatstat.geom::as.solist(stIntensity[12:15]), ncols = 4,
 \references{
 González J.A. and Moraga P. (2018)
 An adaptive kernel estimator for the intensity function of spatio-temporal point processes
-\url{https://arxiv.org/pdf/2208.12026.pdf}
+\url{http://arxiv.org/pdf/2208.12026}
 }
 \author{
 Jonatan A. González

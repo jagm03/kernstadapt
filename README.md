@@ -4,7 +4,7 @@
 
 **kernstadapt** implements functionalities to estimate the intensity of a spatio-temporal point pattern by kernel smoothing with adaptive bandwidth methodology when each data point has its own bandwidth associated as a function of the crowdedness of the region (in space and time) in which the point is observed.
 
-The package presents the intensity estimation through a direct estimator and the partitioning algorithm methodology presented in [González and Moraga (2022)](https://arxiv.org/pdf/2208.12026.pdf).
+The package presents the intensity estimation through a direct estimator and the partitioning algorithm methodology presented in [González and Moraga (2022)](http://arxiv.org/pdf/2208.12026).
 
 ## Installation
 
