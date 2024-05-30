@@ -21,7 +21,7 @@ A spatio-temporal point pattern of locations and times of active deforestation f
   See \code{\link[spatstat.geom]{ppp.object}} for details of the format.
 }
 \source{
-The Amazon Dashboard (\url{http://www.globalfiredata.org/})
+The Amazon Dashboard (\url{https://www.globalfiredata.org/})
 }
 \examples{
 data(amazon)
