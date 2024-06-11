@@ -1,3 +1,3 @@
-# kernstadapt 0.0.2
+# kernstadapt 0.3.0
 
-* The *spatstat.core* old dependencies were migrated to *spatstat.explore*.
+* New network functionalities.
