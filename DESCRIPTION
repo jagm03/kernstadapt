@@ -18,7 +18,7 @@ Imports:
     misc3d,
     sparr,
     spatstat.explore,
-    spatstat.univar
+    spatstat.univar,
     spatstat.geom,
     spatstat.random,
     spatstat.utils,
