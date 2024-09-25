@@ -4,7 +4,7 @@
 \alias{bw.abram.temp}
 \title{Abramson's adaptive temporal bandwidths}
 \usage{
-\method{bw.abram}{temp}(X, h0 = NULL, ..., nt = 128, trim = NULL, at = "points")
+bw.abram.temp(X, h0 = NULL, ..., nt = 128, trim = NULL, at = "points")
 }
 \arguments{
 \item{X}{A vector (a temporal point pattern) from which the bandwidths should be computed.}

@@ -4,7 +4,7 @@
 \alias{bw.abram.net}
 \title{Abramson's adaptive bandwidth for networks}
 \usage{
-\method{bw.abram}{net}(
+bw.abram.net(
   X,
   h0,
   ...,
@@ -26,7 +26,7 @@
 
 \item{hp}{Optional. A scalar pilot bandwidth, used for estimation of the pilot density if required.}
 
-\item{pilot}{Optional. A pilot estimation of the intensity to plug in Abramsom's formula.}
+\item{pilot}{Optional. A pilot estimation of the intensity to plug in Abramson's formula.}
 
 \item{trim}{A trimming value to cut extreme large bandwidths.}
 

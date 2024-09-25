@@ -5,7 +5,7 @@
 #' @param X A point pattern on a linear network (object of class "lpp").
 #' @param h0 The global smoothing bandwidth. The default is the maximal oversmoothing principle of Terrell (1990).
 #' @param ... Additional arguments passed to smoother to control the type of smoothing.
-#' @param pilot Optional. A pilot estimation of the intensity to plug in Abramsom's formula.
+#' @param pilot Optional. A pilot estimation of the intensity to plug in Abramson's formula.
 #' @param hp Optional. A scalar pilot bandwidth, used for estimation of the pilot density if required.
 #' @param trim A trimming value to cut extreme large bandwidths.
 #' @param at Character string specifying whether to compute bandwidths at the points (at = "points", the default) or to compute bandwidths at every bin in a bin grid (at = "bins").

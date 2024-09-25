@@ -41,7 +41,8 @@
 #' }
 #'
 #' @importFrom spatstat.utils check.nvector
-#' @importFrom spatstat.explore bw.abram density.ppp
+#' @importFrom spatstat.univar bw.abram
+#' @importFrom spatstat.explore density.ppp
 #' @importFrom spatstat.geom split.ppp im as.mask safelookup marks unmark Window npoints plot.imlist as.imlist
 #' @importFrom spatstat.random rpoispp
 #' @importFrom misc3d kde3d
