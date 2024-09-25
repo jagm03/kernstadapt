@@ -5,7 +5,7 @@
 #' @param X A point pattern on a linear network (an object of class \code{lpp}) to be smoothed.
 #' @param ... Extra arguments passed to \link[spatstat.linnet]{densityHeat.lpp}.
 #' @param weights Optional. Numeric vector of weights associated with the points of X. Weights can be positive, negative or zero.
-#' @param bw Numeric vector of spatial smoothing bandwidths for each point in \code{X}. By default this is computed using \link[spatstat.explore]{bw.abram}.
+#' @param bw Numeric vector of spatial smoothing bandwidths for each point in \code{X}. By default this is computed using \link[spatstat.univar]{bw.abram}.
 #' @param ngroups Number of groups in which the bandwidths should be partitioned. If this number is 1, then a classical non-adaptive estimator will be used for the spatial part with a bandwidth selected as the median of the bw.xy vector.
 #' @param at String specifying whether to estimate the intensity at a mesh (\code{at = "pixels"}) or only at the points of \code{X} (\code{at = "points"}).
 #' @details

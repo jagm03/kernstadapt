@@ -6,7 +6,7 @@
 #' @param t A numeric vector of temporal coordinates with equal length to the number of points in \code{X}. This gives the time associated with each spatial point. This argument is not necessary if time marks are provided to the point pattern \code{X}.
 #' @param dimyx Spatial pixel resolution. The default is 128 for each axes.
 #' @param dimt Temporal bin vector dimension. The default is 128.
-#' @param bw.xy Numeric vector of spatial smoothing bandwidths for each point in \code{X}. By default this is computed using \link[spatstat.explore]{bw.abram}, with \code{h0} given by \link[sparr]{OS}.
+#' @param bw.xy Numeric vector of spatial smoothing bandwidths for each point in \code{X}. By default this is computed using \link[spatstat.univar]{bw.abram}, with \code{h0} given by \link[sparr]{OS}.
 #' @param bw.t Numeric vector of temporal smoothing bandwidths for each point in \code{t}. By default this is computed using \link{bw.abram.temp}.
 #' @param at String specifying whether to estimate the intensity at a mesh (\code{at = "bins"}) or only at the points of \code{X} (\code{at = "points"}).
 #'

@@ -20,7 +20,7 @@ dens.net.heat(
 
 \item{weights}{Optional. Numeric vector of weights associated with the points of X. Weights can be positive, negative or zero.}
 
-\item{bw}{Numeric vector of spatial smoothing bandwidths for each point in \code{X}. By default this is computed using \link[spatstat.explore]{bw.abram}.}
+\item{bw}{Numeric vector of spatial smoothing bandwidths for each point in \code{X}. By default this is computed using \link[spatstat.univar]{bw.abram}.}
 
 \item{ngroups}{Number of groups in which the bandwidths should be partitioned. If this number is 1, then a classical non-adaptive estimator will be used for the spatial part with a bandwidth selected as the median of the bw.xy vector.}
 

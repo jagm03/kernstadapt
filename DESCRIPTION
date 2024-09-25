@@ -1,6 +1,6 @@
 Package: kernstadapt
 Title: Adaptive Kernel Estimators for Point Process Intensities on Linear Networks
-Version: 0.3.0
+Version: 0.4.0
 Authors@R: c(
     person("Jonatan A", "González", , "jonathan.gonzalez@kaust.edu.sa", 
             role = c("aut", "cre"), comment = c(ORCID = "0000-0002-2296-5271")),
