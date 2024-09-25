@@ -4,7 +4,7 @@
 \alias{bw.abram.net}
 \title{Abramson's adaptive bandwidth for networks}
 \usage{
-bw.abram.net(
+\method{bw.abram}{net}(
   X,
   h0,
   ...,
